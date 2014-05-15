@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_com_boyacai_unionlogin_domain_UserRelation" modelAttribute="userRelation" path="/userrelations" versionField="none" z="v4iYzkGzLnOCwdfhbMWTOqDbDCE=">
+        <field:input field="userno" id="c_com_boyacai_unionlogin_domain_UserRelation_userno" required="true" z="obzVCq8xgNsnjAB813BX9uYF9Pw="/>
+        <field:input field="openId" id="c_com_boyacai_unionlogin_domain_UserRelation_openId" required="true" z="f02ec/wkSzdW/m8cfjfLgMTxA2I="/>
+    </form:update>
+</div>

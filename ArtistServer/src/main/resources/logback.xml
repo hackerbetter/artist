@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<Encoding>UTF-8</Encoding>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%-20(%d{yyyy-MM-dd HH:mm:ss.SSS}) %X{requestId} %X{Mac}
+				%-5level %logger{80}.%method - %msg%n</pattern>
+		</layout>
+	</appender>
+
+    <appender name="artistRequest"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${log.path}/client.request</File>
+        <encoder>
+            <pattern>%-20(%d{MM-dd HH:mm:ss.SSS}) %X{requestId} %-5level%msg%n
+            </pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/client.request.%d{yyyy-MM-dd}</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+	<appender name="artist"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${log.path}client.log</File>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<encoder>
+			<pattern>%-20(%d{MM-dd HH:mm:ss.SSS}) %X{requestId} %-5level%msg%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}client.log.%d{yyyy-MM-dd}</fileNamePattern>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="artistError"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${log.path}client.error</File>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+		<encoder>
+			<pattern>%-20(%d{MM-dd HH:mm:ss.SSS}) %X{requestId} %-5level%msg%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}client.error.%d{yyyy-MM-dd}</fileNamePattern>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="org.apache" level="ERROR" />
+	<logger name="org.hibernate.SQL" level="ERROR" />
+	<logger name="org.hibernate" level="ERROR" />
+	<logger name="org.springframework" level="ERROR" />
+	<logger name="net.sf" level="ERROR" />
+	
+	<logger name="com.hackerbetter.artist.servlet.ArtistServlet" level="INFO" additivity="false">
+		<appender-ref ref="${logback.appender}Request" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="${logback.appender}" />
+		<appender-ref ref="${logback.appender}Error" />
+	</root>
+</configuration>

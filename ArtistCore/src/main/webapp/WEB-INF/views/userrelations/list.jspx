@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_boyacai_unionlogin_domain_UserRelation" items="${userrelations}" z="OwDhg7C01YqXRJA4TyBhIlb8/e4=">
+        <table:table data="${userrelations}" id="l_com_boyacai_unionlogin_domain_UserRelation" path="/userrelations" z="V5gmCyzQF86fJtaYmjjnQrFYVps=">
+            <table:column id="c_com_boyacai_unionlogin_domain_UserRelation_userno" property="userno" z="toKqmSSCdP9yCB1mNSDc2qSjqXM="/>
+            <table:column id="c_com_boyacai_unionlogin_domain_UserRelation_openId" property="openId" z="1L/uY2FHL+VWZfkYL6DEXzprl3I="/>
+        </table:table>
+    </page:list>
+</div>
