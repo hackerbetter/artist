@@ -3,6 +3,7 @@ package com.artist.cms.controller;
 import com.artist.cms.cache.CacheService;
 import com.artist.cms.domain.Tcategory;
 import com.artist.cms.domain.Tfavorite;
+import com.artist.cms.domain.TimageConfig;
 import com.artist.cms.domain.Tpainting;
 import com.artist.cms.dto.ResponseData;
 import com.artist.cms.util.Page;
@@ -156,6 +157,44 @@ public class TpaintingController {
             data.setErrorCode("4");
             logger.error("painting/top");
             errormsg="置顶失败";
+        }
+        data.setValue(errormsg);
+        return data;
+    }
+
+    /**
+     * 推荐至首页
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/recommend", method = RequestMethod.POST)
+    public @ResponseBody
+    ResponseData recommend(@RequestParam("id") Long id) {
+        logger.info("painting/recommend");
+        String errormsg = "推荐成功";
+        ResponseData data = new ResponseData();
+        try{
+            Tpainting tpainting = Tpainting.findTpainting(id);
+            List<Object> param= new ArrayList<Object>();
+            param.add(tpainting.getId());
+            param.add("0");
+            List<TimageConfig> timageConfigs=TimageConfig.findList(" where o.tpaintingId=? and o.type=? "," ",param);
+            if(timageConfigs==null||timageConfigs.isEmpty()){
+                TimageConfig timageConfig=new TimageConfig();
+                timageConfig.setTpaintingId(tpainting.getId());
+                timageConfig.setUrl(tpainting.getShortImage());
+                timageConfig.setType("0");
+                timageConfig.setState("1");
+                timageConfig.persist();
+                data.setErrorCode("0");
+            }else{
+                data.setErrorCode("2");
+                errormsg="首页已经存在该作品";
+            }
+        }catch(Exception e){
+            data.setErrorCode("4");
+            logger.error("painting/recommend",e);
+            errormsg="推荐失败";
         }
         data.setValue(errormsg);
         return data;

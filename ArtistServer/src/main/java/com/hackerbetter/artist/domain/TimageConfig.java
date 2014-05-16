@@ -35,7 +35,6 @@ public class TimageConfig implements Serializable {
 	private String url;
 
     @JsonIgnore
-    @NotNull
     @Column(name="realPath")
     private String realPath;
 

@@ -51,6 +51,32 @@ function doTop(id) {
         }
     });
 }
+
+function recommend(id) {
+    $.ajax({
+        url : "<%=request.getContextPath()%>/painting/recommend",
+        type:"POST",
+        async:false,
+        data:"id=" + id,
+        success:function(data){
+            if(data.errorCode == "1"||data.errorCode == "0") {
+                Dialog.alert(data.value);
+                var now = new Date();
+                var exitTime = now.getTime() + 1000;
+                while (true) {
+                    now = new Date();
+                    if (now.getTime() > exitTime)
+                        break;
+                }
+                window.location.href="<%=request.getContextPath()%>/imageconfig/list";
+            } else if (data.errorCode == "500") {
+                Dialog.alert("服务器错误");
+            } else {
+                Dialog.alert(data.value);
+            }
+        }
+    });
+}
 </script>
 <body>
 	<div style="margin-top: 10px;"></div>
@@ -150,6 +176,7 @@ function doTop(id) {
                                         <a href="<%=request.getContextPath()%>/painting/editUI?id=${painting.id}">编辑</a>
                                         <a href="<%=request.getContextPath()%>/painting/floating?id=${painting.id}">上升</a>
                                         <a href="javascript:doTop('${painting.id}')">置顶</a>
+                                        <a href="javascript:recommend('${painting.id}')">推荐至首页</a>
                                     </td>
                                 </tr>
                             </c:forEach>

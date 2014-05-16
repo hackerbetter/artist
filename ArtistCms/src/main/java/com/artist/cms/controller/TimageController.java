@@ -158,20 +158,9 @@ public class TimageController {
         String errormsg = "删除成功";
         ResponseData data = new ResponseData();
         try{
-            TimageConfig before = TimageConfig.findTimageConfig(id);
-            before.remove();
-            TimageConfig after = TimageConfig.findTimageConfig(id);
-            if(null!=before&&null==after){
-                File destination = new File(before.getRealPath());
-                if (destination.exists()) {
-                    destination.delete();
-                    data.setErrorCode("0");
-                    cleanCache(before.getType());
-                }else{
-                    errormsg="未找到图片文件，删除失败";
-                    data.setErrorCode("1");
-                }
-            }
+            TimageConfig t = TimageConfig.findTimageConfig(id);
+            t.remove();
+            cleanCache(t.getType());
         }catch(Exception e){
             data.setErrorCode("4");
             errormsg="删除失败";
