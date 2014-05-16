@@ -112,12 +112,13 @@ public class TimageController {
 
     @RequestMapping("/edit")
     @Transactional
-    public ModelAndView edit(Long id,String state,Long tpaintingId ,ModelAndView view) {
+    public ModelAndView edit(Long id,String state,Long tpaintingId ,String info,ModelAndView view) {
         String errormsg = "修改成功";
         try {
             TimageConfig timageConfig=TimageConfig.findTimageConfig(id);
             timageConfig.setState(state);
             timageConfig.setTpaintingId(tpaintingId);
+            timageConfig.setInfo(info);
             timageConfig.merge();
             //清楚缓存
             cleanCache(timageConfig.getType());
@@ -185,6 +186,6 @@ public class TimageController {
      */
     private void cleanCache(String type) {
         logger.info("清除Image缓存");
-        cacheService.set(StringUtil.join("_", "client", "image", type),"");
+        cacheService.set(StringUtil.join("_", "client", "image", type), "");
     }
 }

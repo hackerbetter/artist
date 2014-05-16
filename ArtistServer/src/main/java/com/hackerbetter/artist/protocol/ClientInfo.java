@@ -72,7 +72,7 @@ public class ClientInfo {
 	// 新闻资讯
 	private String newsType = ""; // 资讯查询的类型
 	private String id = ""; //编号
-	private String keyStr = ""; //编号
+	private String keyStr = ""; //关键字
 	
 	//消息设置
 	public String token = ""; //iPhone手机标识

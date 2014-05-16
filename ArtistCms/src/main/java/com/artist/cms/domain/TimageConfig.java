@@ -39,6 +39,10 @@ public class TimageConfig implements Serializable {
     @Column(name="realPath")
     private String realPath;
 
+    @Lob
+    @Column(name = "info")
+    private String info;//简介
+
     @JsonIgnore
     @NotNull
 	@Column(name = "state",length = 1)

@@ -99,7 +99,7 @@ Application.onChildMenuMouseOut = function(ele){
                                 <div id="_ChildMenu">
                                     <div url="<%=request.getContextPath()%>/imageconfig/list" onmouseout="Application.onChildMenuMouseOut(this)" onmouseover="Application.onChildMenuMouseOver(this)" onclick="Application.onChildMenuClick(this)" class="divtab"><b><span style="margin-left: 10px">图片管理</span></b></div>
                                     <div url="<%=request.getContextPath()%>/painting/list" onmouseout="Application.onChildMenuMouseOut(this)" onmouseover="Application.onChildMenuMouseOver(this)" onclick="Application.onChildMenuClick(this)" class="divtab"><b><span style="margin-left: 10px">作品管理</span></b></div>
-                                    <div url="<%=request.getContextPath()%>/category/list" onmouseout="Application.onChildMenuMouseOut(this)" onmouseover="Application.onChildMenuMouseOver(this)" onclick="Application.onChildMenuClick(this)" class="divtab"><b><span style="margin-left: 10px">栏目管理</span></b></div>
+                                    <div url="<%=request.getContextPath()%>/category/list" onmouseout="Application.onChildMenuMouseOut(this)" onmouseover="Application.onChildMenuMouseOver(this)" onclick="Application.onChildMenuClick(this)" class="divtab"><b><span style="margin-left: 10px">类型管理</span></b></div>
                                 </div>
 							</td>
 						</tr>

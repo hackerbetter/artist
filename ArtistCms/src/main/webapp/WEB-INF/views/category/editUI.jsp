@@ -6,7 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="<%=request.getContextPath()%>/styles/default.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/styles/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div style="margin-top: 10px;" align="center"><h3>编辑栏目</h3></div>
@@ -21,7 +20,7 @@
                         <tr class="thOver">
                             <td width="6%" class="thOver"><strong>栏目名称:</strong></td>
                             <td width="94%">
-                                <input type="text" name="name" class="inputText" value="${category.memo}"/>
+                                <input type="text" name="name" class="inputText" value="${category.name}"/>
                             </td>
                         </tr>
                         <tr class="thOver">

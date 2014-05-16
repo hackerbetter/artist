@@ -8,6 +8,7 @@
 <link href="<%=request.getContextPath()%>/styles/default.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/styles/style.css" rel="stylesheet" type="text/css">
 </head>
+
 <body>
 	<div style="margin-top: 10px;" align="center"><h3>编辑图片配置</h3></div>
 	<form action="<%=request.getContextPath()%>/imageconfig/edit" method="post">
@@ -45,6 +46,16 @@
 										</select>
 									</td>
 								</tr>
+                                <c:if test="${'0' eq imageconfig.type}">
+                                    <tr class="thOver" id="info">
+                                        <td width="6%" class="thOver"><strong>介绍:</strong></td>
+                                        <td width="94%">
+                                            <textarea name="info" style="width: 400px;height: 150px">
+                                                ${imageconfig.info}
+                                            </textarea>
+                                        </td>
+                                    </tr>
+                                </c:if>
 								<tr class="thOver">
 									<td width="6%" class="thOver"><strong>地址:</strong></td>
 									<td width="94%"><input type="text" name="url" size="220" value="${imageconfig.url }" readonly="true"/></td>

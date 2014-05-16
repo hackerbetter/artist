@@ -33,6 +33,14 @@ privileged aspect TimageConfig_Roo_JavaBean {
         this.realPath = realPath;
     }
     
+    public String TimageConfig.getInfo() {
+        return this.info;
+    }
+    
+    public void TimageConfig.setInfo(String info) {
+        this.info = info;
+    }
+    
     public String TimageConfig.getState() {
         return this.state;
     }

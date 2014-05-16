@@ -16,5 +16,5 @@ public class HomeImage {
     private String author;
     private String countries;
     private Date createtime;
-    private String content;
+    private String info;
 }

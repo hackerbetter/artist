@@ -10,6 +10,7 @@ import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.tostring.RooToString;
 
 import javax.persistence.Column;
+import javax.persistence.Lob;
 import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -44,8 +45,13 @@ public class TimageConfig implements Serializable {
 	private String state="1"; //0 关闭 1开启
 
     @JsonIgnore
-	@Column(name = "sort")
-	private Date sort;
+    @Column(name = "sort")
+    private Date sort;
+
+    @Lob
+    @JsonIgnore
+    @Column(name = "info")
+    private String info;//简介
 
     @JsonIgnore
     @NotNull

@@ -36,5 +36,5 @@ public class StringUtil {
 		}
 		return StringUtils.stripEnd(builder.toString().trim(), split);
 	}
-	
+
 }

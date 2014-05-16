@@ -31,6 +31,8 @@ public class PaintingHandler implements LotserverInterfaceHandler {
             responseString = paintingService.support(clientInfo);
         } else if (StringUtils.equals(requestType, "collect")) { //收藏作品
             responseString = paintingService.collect(clientInfo);
+        } else if (StringUtils.equals(requestType, "query")) { //查询作品
+            responseString = paintingService.query(clientInfo);
         } else { //参数错误
             responseString =paramError(clientInfo.getImei());
         }

@@ -65,12 +65,12 @@ privileged aspect HomeImage_Roo_JavaBean {
         this.createtime = createtime;
     }
     
-    public String HomeImage.getContent() {
-        return this.content;
+    public String HomeImage.getInfo() {
+        return this.info;
     }
     
-    public void HomeImage.setContent(String content) {
-        this.content = content;
+    public void HomeImage.setInfo(String info) {
+        this.info = info;
     }
     
 }

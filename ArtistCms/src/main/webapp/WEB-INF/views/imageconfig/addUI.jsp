@@ -7,11 +7,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="<%=request.getContextPath()%>/styles/default.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/styles/style.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/Dialog.js"></script>	
 </head>
 <script language="JavaScript">
+    $(function(){
+
+        $("input[name='type']").bind("click",function(){
+            var item = $(":radio:checked");
+            if(item.val()=="0"){
+                $("#info").show();
+            }else{
+                $("#info").hide();
+            }
+        })
+
+    })
 function selectAct(){
 	var productno=document.getElementById("productno").value;
 	var URL="<%=request.getContextPath()%>/imageconfig/addUI?productno="+productno;
@@ -51,6 +61,14 @@ function selectAct(){
 										</select>
 									</td>
 								</tr>
+                                <tr class="thOver" id="info">
+                                    <td width="6%" class="thOver"><strong>介绍:</strong></td>
+                                    <td width="94%">
+                                        <textarea  name="info" style="width: 400px;height: 150px">
+
+                                        </textarea>
+                                    </td>
+                                </tr>
 								<tr>
 									<td colspan="2" width="100%">
 										<input name="submit" type="submit" style="width: 40" class="button" value="提交" />

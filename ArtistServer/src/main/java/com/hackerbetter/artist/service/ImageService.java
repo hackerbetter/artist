@@ -42,7 +42,6 @@ public class ImageService {
                 }
                 h.setCountries(p.getCountries());
                 h.setAuthor(p.getAuthor());
-                h.setContent(p.getContent());
                 h.setCreatetime(p.getCreatetime());
                 h.setTitle(p.getTitle());
             } catch (IllegalAccessException e) {

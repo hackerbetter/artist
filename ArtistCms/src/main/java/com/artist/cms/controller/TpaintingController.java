@@ -8,6 +8,9 @@ import com.artist.cms.dto.ResponseData;
 import com.artist.cms.util.Page;
 import com.artist.cms.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocumentList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,33 +46,31 @@ public class TpaintingController {
         view.setViewName("painting/list");
         return view;
     }
-
     @RequestMapping("/query")
     public ModelAndView query(@ModelAttribute("page") Page page,String memo,Long categoryId,String item, ModelAndView view){
         try {
             List<Tcategory> tcategories=Tcategory.findAllTcategorys();
-            StringBuilder where=new StringBuilder(" where 1=1 ");
-            List<Object> params=new ArrayList<Object>();
+            StringBuilder sb=new StringBuilder("Tpainting_solrsummary_t:(");
             if(StringUtils.isNotBlank(memo)){
-                String []keywords=memo.replace(" ",",").split(",");
-                where.append(" and ( o.content like ?");
-                params.add("%"+keywords[0]+"%");
-                for(int i=1;i<keywords.length;i++){
-                    where.append(" or o.content like ?");
-                    params.add("%"+keywords[i]+"%");
-                }
-                where.append(")");
+                sb.append("+(").append(memo).append(")");
             }
             if(categoryId!=null){
-                where.append(" and o.categoryId=? ");
-                params.add(categoryId);
+                sb.append(" +").append(categoryId);
             }
-
             if(StringUtils.isNotBlank(item)){
-                where.append(" and o.item=? ");
-                params.add(item);
+                sb.append(" +").append(item);
             }
-            Tpainting.findList(where.toString(), "order by o.categoryId,o.sort desc", params, page);
+            sb.append(")");
+            SolrQuery query=new SolrQuery(sb.toString().toLowerCase());
+            query.setStart(page.getPageIndex()*page.getMaxResult()).setRows(page.getMaxResult());
+            QueryResponse response=Tpainting.search(query);
+            SolrDocumentList results=response.getResults();
+            if(results==null){
+                page.setList(null);
+            }
+            Long totalResult=results.getNumFound();
+            page.setTotalResult(totalResult.intValue());
+            page.setList(Tpainting.getList(results));
             view.addObject("tcategories", tcategories);
             view.addObject("memo", memo);
             view.addObject("categoryId", categoryId);

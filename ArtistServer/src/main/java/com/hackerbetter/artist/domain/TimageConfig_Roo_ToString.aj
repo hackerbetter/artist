@@ -10,6 +10,7 @@ privileged aspect TimageConfig_Roo_ToString {
     public String TimageConfig.toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Id: ").append(getId()).append(", ");
+        sb.append("Info: ").append(getInfo()).append(", ");
         sb.append("Platform: ").append(getPlatform()).append(", ");
         sb.append("RealPath: ").append(getRealPath()).append(", ");
         sb.append("Sort: ").append(getSort()).append(", ");

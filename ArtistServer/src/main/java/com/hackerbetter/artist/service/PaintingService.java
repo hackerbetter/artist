@@ -6,14 +6,20 @@ import com.hackerbetter.artist.consts.ErrorCode;
 import com.hackerbetter.artist.consts.FavoriteType;
 import com.hackerbetter.artist.domain.Tfavorite;
 import com.hackerbetter.artist.domain.Tpainting;
+import com.hackerbetter.artist.dto.Page;
 import com.hackerbetter.artist.protocol.ClientInfo;
+import com.hackerbetter.artist.util.Response;
 import org.apache.commons.lang.StringUtils;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocumentList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.hackerbetter.artist.util.Response.*;
@@ -116,4 +122,45 @@ public class PaintingService {
         }
     }
 
+    /**
+     * 全文索引
+     * @param clientInfo
+     * @return
+     */
+    public String query(ClientInfo clientInfo) {
+        try {
+            String keyStr=clientInfo.getKeyStr();//关键字
+            String pageIndex = clientInfo.getPageindex(); //当前页数
+            List<Tpainting> list=new ArrayList<Tpainting>();
+            Integer pageNow=0;
+            Integer pageSize=10;
+            Long totalResult=0L;
+            Long totalPage=0L;
+            if (StringUtils.isNotBlank(pageIndex)) {
+                pageNow=Integer.parseInt(pageIndex);
+            }
+            String maxresult = clientInfo.getMaxresult(); //每页显示的条数
+            if (StringUtils.isNotBlank(maxresult)) {
+                pageSize = Integer.parseInt(maxresult);
+            }
+            StringBuilder sb=new StringBuilder("Tpainting_solrsummary_t:");
+            if(StringUtils.isNotBlank(keyStr)){
+                sb.append("(").append(keyStr).append(")");
+            }
+            SolrQuery query=new SolrQuery(sb.toString().toLowerCase());
+            query.setStart(pageNow*pageSize).setRows(pageSize);
+            QueryResponse response=Tpainting.search(query);
+            SolrDocumentList results=response.getResults();
+            if(results==null){
+                return success("查询成功",new Page<Tpainting>(pageNow,pageSize,totalResult,totalPage,list));
+            }
+            totalResult=results.getNumFound();
+            totalPage=totalResult/pageSize+(totalResult%pageSize>0?1:0);
+            list=Tpainting.getList(results);
+            return success("查询成功",new Page<Tpainting>(pageNow,pageSize,totalResult,totalPage,list));
+        } catch (Exception e) {
+            logger.error("关键字查询作品异常",e);
+            return fail("系统繁忙");
+        }
+    }
 }

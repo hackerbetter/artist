@@ -68,5 +68,8 @@
         <property name="persistenceUnitName" value="persistenceUnit"/>
         <property name="dataSource" ref="dataSource"/>
     </bean>
+    <bean class="org.apache.solr.client.solrj.impl.CommonsHttpSolrServer" id="solrServer">
+        <constructor-arg value="${solrUrl}"/>
+    </bean>
     <context:mbean-export/>
 </beans>
