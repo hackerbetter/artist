@@ -60,14 +60,17 @@ public class InfoCacheService {
 		return timageConfigs;
 	}
 
-    public List<Tpainting> getPaintingsByItem(String item){
-        String key=StringUtil.join("_", "client", "painting",item);
+    public List<Tpainting> getPaintingsByItem(String item,Integer pageNow,Integer pageSize){
+        String versionKey="painting_version";
+        Integer version=cacheService.get(versionKey);
+        String key=StringUtil.join("_", "client", "painting", item, pageNow + "", pageSize + "", version==null?"0":version+"");
         String tpaintings=cacheService.get(key);
         List<Tpainting> list=null;
+        String where=" where o.item= ?";
+        List<Object> param=new ArrayList<Object>();
+        param.add(item);
         if(StringUtils.isBlank(tpaintings)){
-            List<Object> param=new ArrayList<Object>();
-            param.add(item);
-            list=Tpainting.findList(" where o.item= ?", " order by o.sort desc", param);
+            list=Tpainting.findList(where, " order by o.sort desc", param, pageNow, pageSize);
             cacheService.set(key,Tpainting.toJsonArray(list));
         }else{
             list= (List<Tpainting>) Tpainting.fromJsonArrayToTpaintings(tpaintings);

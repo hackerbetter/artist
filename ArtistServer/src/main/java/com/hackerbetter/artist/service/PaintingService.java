@@ -8,7 +8,6 @@ import com.hackerbetter.artist.domain.Tfavorite;
 import com.hackerbetter.artist.domain.Tpainting;
 import com.hackerbetter.artist.dto.Page;
 import com.hackerbetter.artist.protocol.ClientInfo;
-import com.hackerbetter.artist.util.Response;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -37,11 +36,22 @@ public class PaintingService {
 
     public String queryList(ClientInfo clientInfo) {
         String item=clientInfo.getItem();//栏目
+        String pageIndex = clientInfo.getPageindex(); //当前页数
+        String maxresult = clientInfo.getMaxresult(); //每页显示的条数
+        List<Tpainting> list=new ArrayList<Tpainting>();
+        Integer pageNow=0;
+        Integer pageSize=10;
+        if (StringUtils.isNotBlank(pageIndex)) {
+            pageNow=Integer.parseInt(pageIndex);
+        }
+        if (StringUtils.isNotBlank(maxresult)) {
+            pageSize = Integer.parseInt(maxresult);
+        }
         if(StringUtils.isBlank(item)){
             return paramError(clientInfo.getImei());
         }
         try {
-            List<Tpainting> paintings= infoCacheService.getPaintingsByItem(item);
+            List<Tpainting> paintings= infoCacheService.getPaintingsByItem(item,pageNow,pageSize);
             if(paintings!=null&&!paintings.isEmpty()){
                 for(Tpainting tpainting:paintings){
                     Long supportNum= Tfavorite.querySupportNumByTypeAndPaintingId(tpainting.getId());

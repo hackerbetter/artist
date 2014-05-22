@@ -68,7 +68,7 @@
                                 <tr>
                                     <td width="6%" class="thOver"><strong>简图:</strong></td>
                                     <td width="94%">
-                                        <script id="shortImage" name="shortImage" type="text/plain" style="width:600px;height:100px;white-space:normal">
+                                        <script id="shortImage" name="shortImage" type="text/plain" style="width:99%;height:100px;white-space:normal">
                                         </script>
                                         <script type="text/javascript">
                                             var editor = new baidu.editor.ui.Editor({
@@ -82,7 +82,7 @@
                                 <tr>
                                     <td width="6%" class="thOver"><strong>内容:</strong></td>
                                     <td width="94%">
-                                            <script id="container" name="content" type="text/plain" style="width:600px;height:300px;white-space:normal">
+                                            <script id="container" name="content" type="text/plain" style="width:99%;height:300px;white-space:normal">
                                             </script>
                                             <script type="text/javascript">
                                                 var editor = UE.getEditor('container');

@@ -46,9 +46,7 @@ function remove(id) {
 				 }
 				window.location.href="<%=request.getContextPath()%>/imageconfig/list";
 			} else if (data.errorCode == "500") {
-							Dialog.alert("服务器错误");
-			} else {
-							Dialog.alert("删除失败");
+                Dialog.alert("服务器错误");
 			}
 		}
 	});

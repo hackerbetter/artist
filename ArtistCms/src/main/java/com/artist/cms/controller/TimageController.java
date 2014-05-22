@@ -65,26 +65,7 @@ public class TimageController {
     public ModelAndView add(HttpServletRequest request, @ModelAttribute("userinfo") TimageConfig imageConfig, ModelAndView view) {
         String errormsg = "添加成功";
         try {
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-            MultipartFile file = multipartRequest.getFile("file");
-            if(file==null){
-                errormsg = "文件为空";
-                view.addObject("errormsg", errormsg);
-                return this.list(new Page(), view);
-            }
-            String originalName = file.getOriginalFilename();
-            String fileName=System.currentTimeMillis()+originalName;//文件名=时间戳+原始文件名称
-            String realPath = PropertiesConstant.uploadPath+fileName;
-            String url=PropertiesConstant.imageUrl+fileName;
-            //判断路径是否存在，如果不存在则创建此目录
-            File dir = new File(PropertiesConstant.uploadPath);
-            if (!dir.exists()) {
-                dir.mkdir();
-            }
-            File destination = new File(realPath);
-            file.transferTo(destination);
-            imageConfig.setRealPath(realPath);
-            imageConfig.setUrl(url);
+            imageConfig.setUrl(StringUtil.getImageSrc(imageConfig.getUrl()));
             imageConfig.persist();
             //清楚缓存
             cleanCache(imageConfig.getType());
@@ -101,6 +82,7 @@ public class TimageController {
         try {
             List<Tpainting> tpaintings = Tpainting.findAllTpaintings();
             TimageConfig timageConfig=TimageConfig.findTimageConfig(id);
+            timageConfig.setUrl(StringUtil.buildImgTag(timageConfig.getUrl()));
             view.addObject("tpaintings", tpaintings);
             view.addObject("imageconfig", timageConfig);
         } catch (Exception e) {
@@ -112,11 +94,14 @@ public class TimageController {
 
     @RequestMapping("/edit")
     @Transactional
-    public ModelAndView edit(Long id,String state,Long tpaintingId ,String info,ModelAndView view) {
+    public ModelAndView edit(Long id,String state,Long tpaintingId,String url,String info,ModelAndView view) {
         String errormsg = "修改成功";
         try {
             TimageConfig timageConfig=TimageConfig.findTimageConfig(id);
             timageConfig.setState(state);
+            if(StringUtils.isNotBlank(url)){
+               timageConfig.setUrl(StringUtil.getImageSrc(url));
+            }
             timageConfig.setTpaintingId(tpaintingId);
             timageConfig.setInfo(info);
             timageConfig.merge();
@@ -161,6 +146,7 @@ public class TimageController {
             TimageConfig t = TimageConfig.findTimageConfig(id);
             t.remove();
             cleanCache(t.getType());
+            data.setErrorCode("0");
         }catch(Exception e){
             data.setErrorCode("4");
             errormsg="删除失败";

@@ -93,7 +93,7 @@ public class TpaintingController {
     }
     @RequestMapping("/add")
     public ModelAndView add(Tpainting tpainting,String shortImage,ModelAndView view){
-        tpainting.setShortImage(getImageSrc(shortImage));
+        tpainting.setShortImage(StringUtil.getImageSrc(shortImage));
         tpainting.persist();
         updateCache(tpainting);//更新缓存
         return this.list(new Page(), view);
@@ -104,7 +104,7 @@ public class TpaintingController {
         try {
             List<Tcategory> tcategories=Tcategory.findAllTcategorys();
             Tpainting tpainting=Tpainting.findTpainting(id);
-            tpainting.setShortImage(buildImgTag(tpainting.getShortImage()));
+            tpainting.setShortImage(StringUtil.buildImgTag(tpainting.getShortImage()));
             view.addObject("tcategories", tcategories);
             view.addObject("tpainting", tpainting);
         } catch (Exception e) {
@@ -123,7 +123,7 @@ public class TpaintingController {
                             ,String content,ModelAndView view){
         try {
             Tpainting tpainting=Tpainting.findTpainting(id);
-            tpainting.setShortImage(getImageSrc(shortImage));
+            tpainting.setShortImage(StringUtil.getImageSrc(shortImage));
             tpainting.setState(state);
             tpainting.setTitle(title);
             tpainting.setAuthor(author);
@@ -152,7 +152,6 @@ public class TpaintingController {
             tpainting.merge();
             data.setErrorCode("0");
             updateCache(tpainting);
-            sortCache(tpainting.getItem());
         }catch(Exception e){
             data.setErrorCode("4");
             logger.error("painting/top");
@@ -222,7 +221,6 @@ public class TpaintingController {
             abovePainting.merge();
             updateCache(tpainting);
             updateCache(abovePainting);
-            sortCache(String.valueOf(tpainting.getCategoryId()));
         }catch(Exception e){
             logger.error("上升失败",e);
             view.addObject("errorMsg","上升失败");
@@ -230,59 +228,18 @@ public class TpaintingController {
         return this.list(new Page(), view);
     }
 
-    private void sortCache(String item){
-        String keyAll=StringUtil.join("_", "client", "painting",item);
-        String tpaintings=cacheService.get(keyAll);
-        if(StringUtils.isBlank(tpaintings)){
-            return;
-        }
-        List<Tpainting> list= (List<Tpainting>) Tpainting.fromJsonArrayToTpaintings(tpaintings);
-        Collections.sort(list,new Comparator<Tpainting>() {
-            public int compare(Tpainting t1, Tpainting t2) {
-                Date sort1=t1.getSort();
-                Date sort2=t2.getSort();
-                if(sort1.before(sort2)){
-                    return -1;
-                }else if(sort1.after(sort2)){
-                    return 1;
-                }else{
-                    return 0;
-                }
-            }
-        });
-        cacheService.set(keyAll,list);
-    }
+
     private void updateCache(Tpainting tpainting){
+        String versionKey="painting_version";
+        Integer version=cacheService.get(versionKey);
+        if(version==null){
+            version=0;
+        }
+        cacheService.set(versionKey,version+1);
         String keyOne=StringUtil.join("_", "client", "painting",String.valueOf(tpainting.getId()));
-        String keyAll=StringUtil.join("_", "client", "painting",String.valueOf(tpainting.getItem()));
         cacheService.set(keyOne,tpainting.toJson());
-        String tpaintings=cacheService.get(keyAll);
-        if(StringUtils.isBlank(tpaintings)){
-            return;
-        }
-        List<Tpainting> list= (List<Tpainting>) Tpainting.fromJsonArrayToTpaintings(tpaintings);
-        for(int i=0;i<list.size();i++){
-            if(list.get(i).getId()==tpainting.getId()){
-                list.set(i,tpainting);
-            }
-        }
-        cacheService.set(keyAll,Tpainting.toJsonArray(list));
     }
 
-    private String buildImgTag(String url){
-        if(StringUtils.isBlank(url)){
-            return "";
-        }
-        return new StringBuilder("<img src=\"").append(url).append("\"/>").toString();
-    }
 
-    private String getImageSrc(String html){
-        String IMGSRC_REG = "http:\"?(.*?)(\"|>|\\s+)";//匹配图片链接
-        Matcher matcher = Pattern.compile(IMGSRC_REG).matcher(html);
-        if (matcher.find()) {
-            return matcher.group().substring(0, matcher.group().length() - 1);
-        }
-        return "";
-    }
 
 }

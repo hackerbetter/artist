@@ -8,6 +8,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="<%=request.getContextPath()%>/styles/default.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.js"></script>
+<link type="text/css" href="<%=request.getContextPath()%>/ueditor/themes/default/css/ueditor.css"/>
+<!-- 配置文件 -->
+<script type="text/javascript" src="<%=request.getContextPath()%>/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="<%=request.getContextPath()%>/ueditor/ueditor.all.min.js"></script>
+<!-- 语言包文件(建议手动加载语言包，避免在ie下，因为加载语言失败导致编辑器加载失败) -->
+<script type="text/javascript" src="<%=request.getContextPath()%>/ueditor/lang/zh-cn/zh-cn.js"></script>
 </head>
 <script language="JavaScript">
     $(function(){
@@ -47,7 +54,16 @@ function selectAct(){
                                 <tr class="thOver">
                                     <td width="6%" class="thOver"><strong>图片:</strong></td>
                                     <td width="94%">
-                                        <input id="file" name="file" type="file"  />
+                                        <script id="url" name="url" type="text/plain" style="width:99%;height:100px;white-space:normal">
+                                            ${imageconfig.url }
+                                        </script>
+                                        <script type="text/javascript">
+                                            var editor = new baidu.editor.ui.Editor({
+                                                toolbars:[[ 'source', 'undo', 'redo','|','insertimage']]
+                                            });
+                                            editor.render("url");
+                                            editor.setDisabled();
+                                        </script>
                                     </td>
                                 </tr>
 								<tr class="thOver">

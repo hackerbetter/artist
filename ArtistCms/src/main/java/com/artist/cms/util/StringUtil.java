@@ -2,6 +2,9 @@ package com.artist.cms.util;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class StringUtil {
 
 	public static boolean isEmpty(String str) {
@@ -36,5 +39,19 @@ public class StringUtil {
 		}
 		return StringUtils.stripEnd(builder.toString().trim(), split);
 	}
+    public static String buildImgTag(String url){
+        if(StringUtils.isBlank(url)){
+            return "";
+        }
+        return new StringBuilder("<img src=\"").append(url).append("\"/>").toString();
+    }
 
+    public static String getImageSrc(String html){
+        String IMGSRC_REG = "http:\"?(.*?)(\"|>|\\s+)";//匹配图片链接
+        Matcher matcher = Pattern.compile(IMGSRC_REG).matcher(html);
+        if (matcher.find()) {
+            return matcher.group().substring(0, matcher.group().length() - 1);
+        }
+        return "";
+    }
 }

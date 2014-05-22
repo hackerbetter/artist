@@ -1,6 +1,6 @@
 package com.hackerbetter.artist.domain;
 
-import com.hackerbetter.artist.util.common.Page;
+import com.hackerbetter.artist.dto.Page;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -103,7 +103,7 @@ public class Tpainting  implements Serializable {
         return list;
     }
 
-    public static void findList(String where, String orderby, List<Object> params, Page<Tpainting> page) {
+    public static List<Tpainting> findList(String where, String orderby, List<Object> params,Integer pageNow,Integer pageSize) {
         try {
             TypedQuery<Tpainting> q = entityManager().createQuery(
                     "SELECT o FROM Tpainting o " + where + orderby, Tpainting.class);
@@ -114,21 +114,13 @@ public class Tpainting  implements Serializable {
                     index = index + 1;
                 }
             }
-            q.setFirstResult(page.getPageIndex() * page.getMaxResult())
-                    .setMaxResults(page.getMaxResult());
-            page.setList(q.getResultList());
-            TypedQuery<Long> totalQ = entityManager().createQuery(
-                    "select count(o) from Tpainting o " + where, Long.class);
-            if (null != params && !params.isEmpty()) {
-                int index = 1;
-                for (Object param : params) {
-                    totalQ.setParameter(index, param);
-                    index = index + 1;
-                }
-            }
-            page.setTotalResult(totalQ.getSingleResult().intValue());
+            q.setFirstResult(pageNow * pageSize)
+                    .setMaxResults(pageSize);
+            return q.getResultList();
+
         } catch (Exception e) {
             logger.error(e.getMessage());
+            return null;
         }
     }
 
@@ -149,4 +141,16 @@ public class Tpainting  implements Serializable {
         return entityManager().createQuery("select o FROM Tpainting o where o.id in (:ids)",Tpainting.class).setParameter("ids",ids).getResultList();
     }
 
+    public static Long count(String where,List<Object> params){
+        TypedQuery<Long> totalQ = entityManager().createQuery(
+                "select count(o) from Tpainting o " + where, Long.class);
+        if (null != params && !params.isEmpty()) {
+            int index = 1;
+            for (Object param : params) {
+                totalQ.setParameter(index, param);
+                index = index + 1;
+            }
+        }
+        return totalQ.getSingleResult();
+    }
 }
