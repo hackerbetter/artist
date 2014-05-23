@@ -206,7 +206,7 @@ function recommend(id) {
                                     <c:choose>
                                         <c:when test="${page.pageIndex + 1 < page.totalPage}">
                                             <a
-                                                    href="<%=request.getContextPath()%>/imageconfig/list?maxResult=${page.maxResult}&pageIndex=${page.pageIndex + 1}">下一页</a>
+                                                    href="<%=request.getContextPath()%>/painting/list?maxResult=${page.maxResult}&pageIndex=${page.pageIndex + 1}">下一页</a>
                                         </c:when>
                                         <c:otherwise>
                                             下一页
