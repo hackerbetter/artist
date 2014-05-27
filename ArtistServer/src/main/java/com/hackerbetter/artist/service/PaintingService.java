@@ -52,10 +52,11 @@ public class PaintingService {
             return paramError(clientInfo.getImei());
         }
         try {
-            Page page=infoCacheService.getPaintingsByItem(item,pageNow,pageSize);
-            if(page!=null){
-                list=page.getValue();
-                String hasMore=page.getTotalPage()>pageNow?"true":"false";
+            list=infoCacheService.getPaintingsByItem(item,pageNow,pageSize);
+            long count=infoCacheService.count(item);
+            long totalPage= count/pageSize+(count%pageSize>0?1:0);
+            if(list!=null&&!list.isEmpty()){
+                String hasMore=totalPage>pageNow?"true":"false";
                 String result= success("查询成功", list);
                 return JsonUtil.add(result,"hasMore",hasMore);
             }

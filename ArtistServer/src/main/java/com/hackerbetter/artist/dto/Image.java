@@ -14,6 +14,7 @@ public class Image {
     private Long tpaintingId;
     private String title;
     private String author;
+    private long categoryId;
     private String countries;
     private Date createtime;
     private String info;

@@ -3,7 +3,6 @@ package com.hackerbetter.artist.cache;
 import com.hackerbetter.artist.domain.Tcategory;
 import com.hackerbetter.artist.domain.TimageConfig;
 import com.hackerbetter.artist.domain.Tpainting;
-import com.hackerbetter.artist.dto.Page;
 import com.hackerbetter.artist.util.common.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,24 +60,37 @@ public class InfoCacheService {
 		return timageConfigs;
 	}
 
-    public Page getPaintingsByItem(String item,Integer pageNow,Integer pageSize){
+    public List<Tpainting> getPaintingsByItem(String item,Integer pageNow,Integer pageSize){
         String versionKey="painting_version";
         Integer version=cacheService.get(versionKey);
         String key=StringUtil.join("_", "client", "painting", item, pageNow + "", pageSize + "", version==null?"0":version+"");
         String tpaintings=cacheService.get(key);
-        Page page=null;
+        List<Tpainting> list=null;
+        String where=" where o.item= ?";
+        List<Object> param=new ArrayList<Object>();
+        param.add(item);
         if(StringUtils.isBlank(tpaintings)){
+            list=Tpainting.findList(where, " order by o.sort desc", param, pageNow, pageSize);
+            cacheService.set(key,Tpainting.toJsonArray(list));
+        }else{
+            list= (List<Tpainting>) Tpainting.fromJsonArrayToTpaintings(tpaintings);
+        }
+        return list;
+    }
+
+    public long count(String item){
+        String versionKey="painting_version";
+        Integer version=cacheService.get(versionKey);
+        String key=StringUtil.join("_", "client", "painting","count", item,version==null?"0":version+"");
+        Long count=cacheService.get(key);
+        if(count==null||count==0){
             String where=" where o.item= ?";
             List<Object> param=new ArrayList<Object>();
             param.add(item);
-            List<Tpainting>  list=Tpainting.findList(where, " order by o.sort desc", param, pageNow, pageSize);
-            page= new Page(pageNow,pageSize,Tpainting.count(where,param));
-            page.setValue(list);
-            cacheService.set(key,page.toJson());
-        }else{
-            page=Page.fromJsonToPage(tpaintings);
+            count=Tpainting.count(where,param);
+            cacheService.set(key,count);
         }
-        return page;
+        return count;
     }
 
     public Tpainting getTpainting(String paintingId){

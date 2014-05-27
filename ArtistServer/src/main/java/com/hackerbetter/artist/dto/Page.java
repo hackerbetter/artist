@@ -28,7 +28,7 @@ public class Page<E> {
         this.pageNow = pageNow;
         this.pageSize = pageSize;
         this.count = count;
-        this.totalPage = count/pageSize+(count%pageSize>0?1:0);;
+        this.totalPage = count/pageSize+(count%pageSize>0?1:0);
     }
 
     public Page(int pageNow, int pageSize, Long count, Long totalPage) {

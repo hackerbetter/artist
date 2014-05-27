@@ -49,6 +49,14 @@ privileged aspect Image_Roo_JavaBean {
         this.author = author;
     }
     
+    public long Image.getCategoryId() {
+        return this.categoryId;
+    }
+    
+    public void Image.setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
+    }
+    
     public String Image.getCountries() {
         return this.countries;
     }
