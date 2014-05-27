@@ -2,6 +2,7 @@ package com.hackerbetter.artist.util;
 
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,5 +39,10 @@ public class JsonUtil {
 		}
         return "";
     }
-	
+
+    public static String add(String json,String key,Object value) {
+        JSONObject responseJson = JSONObject.fromObject(json);
+        responseJson.put(key, value);
+        return responseJson.toString();
+    }
 }

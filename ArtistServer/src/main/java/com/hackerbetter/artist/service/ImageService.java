@@ -3,7 +3,7 @@ package com.hackerbetter.artist.service;
 import com.hackerbetter.artist.cache.InfoCacheService;
 import com.hackerbetter.artist.domain.TimageConfig;
 import com.hackerbetter.artist.domain.Tpainting;
-import com.hackerbetter.artist.dto.HomeImage;
+import com.hackerbetter.artist.dto.Image;
 import com.hackerbetter.artist.util.Response;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
@@ -28,11 +28,11 @@ public class ImageService {
      * 查询首页图片
      * @return
      */
-    public String queryHomeImage() {
-        List<TimageConfig> list=infoCacheService.getTimageConfigsByType("0");//所有首页图片
-        List<HomeImage> result=new ArrayList<HomeImage>();
+    public String queryImage(String type) {
+        List<TimageConfig> list=infoCacheService.getTimageConfigsByType(type);
+        List<Image> result=new ArrayList<Image>();
         for(TimageConfig t:list){
-            HomeImage h=new HomeImage();
+            Image h=new Image();
             try {
                 BeanUtils.copyProperties(h,t);
                 Tpainting p=Tpainting.findTpainting(t.getTpaintingId());
@@ -55,11 +55,4 @@ public class ImageService {
         return Response.success("查询成功",result);
     }
 
-    /**
-     * 查询轮播图片
-     * @return
-     */
-    public String queryHeadImage() {
-        return Response.success("查询成功",infoCacheService.getTimageConfigsByType("1"));
-    }
 }

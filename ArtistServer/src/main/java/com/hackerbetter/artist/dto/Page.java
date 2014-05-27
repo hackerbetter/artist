@@ -1,8 +1,14 @@
 package com.hackerbetter.artist.dto;
 
+import flexjson.JSONDeserializer;
+import flexjson.JSONSerializer;
 import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.json.RooJson;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
 
 /**
  * Created by hacker on 2014/5/16.
@@ -38,5 +44,18 @@ public class Page<E> {
         this.count = count;
         this.totalPage = totalPage;
         this.value = value;
+    }
+
+    public String toJson() {
+        return new JSONSerializer().exclude("*.class").serialize(this);
+    }
+    public static Page<Object> fromJsonToPage(String json) {
+        return new JSONDeserializer<Page>().use(null, Page.class).deserialize(json);
+    }
+    public static String toJsonArray(Collection<Page<Object>> collection) {
+        return new JSONSerializer().exclude("*.class").serialize(collection);
+    }
+    public static Collection<Page> fromJsonArrayToPages(String json) {
+        return new JSONDeserializer<List<Page>>().use(null, ArrayList.class).use("values", Page.class).deserialize(json);
     }
 }

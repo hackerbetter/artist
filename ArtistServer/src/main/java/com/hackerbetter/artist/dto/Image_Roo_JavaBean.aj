@@ -7,69 +7,69 @@ import java.lang.Long;
 import java.lang.String;
 import java.util.Date;
 
-privileged aspect HomeImage_Roo_JavaBean {
+privileged aspect Image_Roo_JavaBean {
     
-    public Long HomeImage.getId() {
+    public Long Image.getId() {
         return this.id;
     }
     
-    public void HomeImage.setId(Long id) {
+    public void Image.setId(Long id) {
         this.id = id;
     }
     
-    public String HomeImage.getUrl() {
+    public String Image.getUrl() {
         return this.url;
     }
     
-    public void HomeImage.setUrl(String url) {
+    public void Image.setUrl(String url) {
         this.url = url;
     }
     
-    public Long HomeImage.getTpaintingId() {
+    public Long Image.getTpaintingId() {
         return this.tpaintingId;
     }
     
-    public void HomeImage.setTpaintingId(Long tpaintingId) {
+    public void Image.setTpaintingId(Long tpaintingId) {
         this.tpaintingId = tpaintingId;
     }
     
-    public String HomeImage.getTitle() {
+    public String Image.getTitle() {
         return this.title;
     }
     
-    public void HomeImage.setTitle(String title) {
+    public void Image.setTitle(String title) {
         this.title = title;
     }
     
-    public String HomeImage.getAuthor() {
+    public String Image.getAuthor() {
         return this.author;
     }
     
-    public void HomeImage.setAuthor(String author) {
+    public void Image.setAuthor(String author) {
         this.author = author;
     }
     
-    public String HomeImage.getCountries() {
+    public String Image.getCountries() {
         return this.countries;
     }
     
-    public void HomeImage.setCountries(String countries) {
+    public void Image.setCountries(String countries) {
         this.countries = countries;
     }
     
-    public Date HomeImage.getCreatetime() {
+    public Date Image.getCreatetime() {
         return this.createtime;
     }
     
-    public void HomeImage.setCreatetime(Date createtime) {
+    public void Image.setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
     
-    public String HomeImage.getInfo() {
+    public String Image.getInfo() {
         return this.info;
     }
     
-    public void HomeImage.setInfo(String info) {
+    public void Image.setInfo(String info) {
         this.info = info;
     }
     

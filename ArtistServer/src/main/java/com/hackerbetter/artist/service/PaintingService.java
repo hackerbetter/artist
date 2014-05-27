@@ -8,6 +8,7 @@ import com.hackerbetter.artist.domain.Tfavorite;
 import com.hackerbetter.artist.domain.Tpainting;
 import com.hackerbetter.artist.dto.Page;
 import com.hackerbetter.artist.protocol.ClientInfo;
+import com.hackerbetter.artist.util.JsonUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -51,13 +52,12 @@ public class PaintingService {
             return paramError(clientInfo.getImei());
         }
         try {
-            List<Tpainting> paintings= infoCacheService.getPaintingsByItem(item,pageNow,pageSize);
-            if(paintings!=null&&!paintings.isEmpty()){
-                for(Tpainting tpainting:paintings){
-                    Long supportNum= Tfavorite.querySupportNumByTypeAndPaintingId(tpainting.getId());
-                    tpainting.setSupportNum(supportNum);
-                }
-                return success("查询成功", paintings);
+            Page page=infoCacheService.getPaintingsByItem(item,pageNow,pageSize);
+            if(page!=null){
+                list=page.getValue();
+                String hasMore=page.getTotalPage()>pageNow?"true":"false";
+                String result= success("查询成功", list);
+                return JsonUtil.add(result,"hasMore",hasMore);
             }
             return fail(ErrorCode.NoRecord);
         } catch (Exception e) {

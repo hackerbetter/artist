@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by hacker on 2014/5/15.
  */
 @RooJavaBean
-public class HomeImage {
+public class Image {
     private Long id;
     private String url;
     private Long tpaintingId;
