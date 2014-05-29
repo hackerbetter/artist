@@ -93,7 +93,9 @@ public class TpaintingController {
     }
     @RequestMapping("/add")
     public ModelAndView add(Tpainting tpainting,String shortImage,ModelAndView view){
-        tpainting.setShortImage(StringUtil.getImageSrc(shortImage));
+        if(StringUtils.isNotBlank(shortImage)){
+            tpainting.setShortImage(StringUtil.getImageSrc(shortImage));
+        }
         tpainting.persist();
         updateCache(tpainting);//更新缓存
         return this.list(new Page(), view);
@@ -123,7 +125,9 @@ public class TpaintingController {
                             ,String content,ModelAndView view){
         try {
             Tpainting tpainting=Tpainting.findTpainting(id);
-            tpainting.setShortImage(StringUtil.getImageSrc(shortImage));
+            if(StringUtils.isNotBlank(shortImage)){
+                tpainting.setShortImage(StringUtil.getImageSrc(shortImage));
+            }
             tpainting.setState(state);
             tpainting.setTitle(title);
             tpainting.setAuthor(author);
