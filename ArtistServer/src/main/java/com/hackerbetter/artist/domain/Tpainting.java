@@ -1,6 +1,7 @@
 package com.hackerbetter.artist.domain;
 
 import com.hackerbetter.artist.dto.ImgDto;
+import org.apache.commons.lang.StringUtils;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -201,8 +202,14 @@ public class Tpainting  implements Serializable {
             Element element = elements.get(i);
             String ref = "<!--IMG#" + i + "-->";
             String src = element.attr("src");
-            String height = element.attr("height");
-            String width = element.attr("width");
+            String realWidth=element.attr("width");
+            String realheight=element.attr("height");
+            String style=element.attr("style");
+            String []css=style.split(";");
+            String width=StringUtils.substringAfter(css[0],":");
+            String height=StringUtils.substringAfter(css[1],":");
+            width=StringUtils.isBlank(width)?realWidth:width.replace("px","");
+            height=StringUtils.isBlank(height)?realheight:height.replace("px","");
             String alt = element.attr("alt");
             ImgDto img = new ImgDto(ref, width, height, alt, src);
             imgs.add(img);

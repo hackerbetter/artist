@@ -241,7 +241,7 @@ public class TpaintingController {
         }
         cacheService.set(versionKey,version+1);
         String keyOne=StringUtil.join("_", "client", "painting",String.valueOf(tpainting.getId()));
-        cacheService.set(keyOne,tpainting.toJson());
+        cacheService.delete(keyOne);
     }
 
 
