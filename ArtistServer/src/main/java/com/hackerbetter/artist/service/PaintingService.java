@@ -7,7 +7,6 @@ import com.hackerbetter.artist.consts.FavoriteType;
 import com.hackerbetter.artist.domain.Tfavorite;
 import com.hackerbetter.artist.domain.Tpainting;
 import com.hackerbetter.artist.dto.Page;
-import com.hackerbetter.artist.dto.PaintingDto;
 import com.hackerbetter.artist.protocol.ClientInfo;
 import com.hackerbetter.artist.util.JsonUtil;
 import org.apache.commons.lang.StringUtils;
@@ -40,7 +39,6 @@ public class PaintingService {
         String item=clientInfo.getItem();//栏目
         String pageIndex = clientInfo.getPageindex(); //当前页数
         String maxresult = clientInfo.getMaxresult(); //每页显示的条数
-        new ArrayList<PaintingDto>();
         Integer pageNow=0;
         Integer pageSize=10;
         if (StringUtils.isNotBlank(pageIndex)) {
@@ -53,7 +51,7 @@ public class PaintingService {
             return paramError(clientInfo.getImei());
         }
         try {
-            List<PaintingDto> list=infoCacheService.getPaintingsByItem(item,pageNow,pageSize);
+            List<Tpainting> list=infoCacheService.getPaintingsByItem(item,pageNow,pageSize);
             long count=infoCacheService.count(item);
             long totalPage= count/pageSize+(count%pageSize>0?1:0);
             if(list!=null&&!list.isEmpty()){
@@ -75,20 +73,20 @@ public class PaintingService {
             return fail(ErrorCode.PaintingEmpty);
         }
         try {
-            PaintingDto paintingDto=infoCacheService.getTpainting(paintingId);
-            if(paintingDto!=null){
-                Long supportNum= Tfavorite.querySupportNumByTypeAndPaintingId(paintingDto.getId());
-                paintingDto.setSupportNum(supportNum);
+            Tpainting painting=infoCacheService.getTpainting(paintingId);
+            if(painting!=null){
+                Long supportNum= Tfavorite.querySupportNumByTypeAndPaintingId(painting.getId());
+                painting.setSupportNum(supportNum);
                 if(StringUtils.isBlank(userno)){
-                    return success("查询成功",paintingDto);
+                    return success("查询成功",painting);
                 }
-                Tfavorite myfavorite= Tfavorite.findByUsernoAndPaintingId(Long.parseLong(userno),paintingDto.getId(),FavoriteType.STAR);
+                Tfavorite myfavorite= Tfavorite.findByUsernoAndPaintingId(Long.parseLong(userno),painting.getId(),FavoriteType.STAR);
                 if(myfavorite!=null&&myfavorite.getState()==1){
-                    paintingDto.setIsSupport("true");
+                    painting.setIsSupport("true");
                 }else{
-                    paintingDto.setIsSupport("false");
+                    painting.setIsSupport("false");
                 }
-                return success("查询成功",paintingDto);
+                return success("查询成功",painting);
             }
             return fail(ErrorCode.NoRecord);
         } catch (Exception e) {
@@ -169,6 +167,7 @@ public class PaintingService {
             totalResult=results.getNumFound();
             totalPage=totalResult/pageSize+(totalResult%pageSize>0?1:0);
             list=Tpainting.getList(results);
+            Tpainting.parseAllImg(list);
             return success("查询成功",new Page<Tpainting>(pageNow,pageSize,totalResult,totalPage,list));
         } catch (Exception e) {
             logger.error("关键字查询作品异常",e);

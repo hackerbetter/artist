@@ -15,10 +15,13 @@ privileged aspect Tpainting_Roo_ToString {
         sb.append("Countries: ").append(getCountries()).append(", ");
         sb.append("Createtime: ").append(getCreatetime()).append(", ");
         sb.append("Id: ").append(getId()).append(", ");
+        sb.append("Imgs: ").append(getImgs() == null ? "null" : getImgs().size()).append(", ");
+        sb.append("IsSupport: ").append(getIsSupport()).append(", ");
         sb.append("Item: ").append(getItem()).append(", ");
         sb.append("ShortImage: ").append(getShortImage()).append(", ");
         sb.append("Sort: ").append(getSort()).append(", ");
         sb.append("State: ").append(getState()).append(", ");
+        sb.append("SupportNum: ").append(getSupportNum()).append(", ");
         sb.append("Title: ").append(getTitle());
         return sb.toString();
     }

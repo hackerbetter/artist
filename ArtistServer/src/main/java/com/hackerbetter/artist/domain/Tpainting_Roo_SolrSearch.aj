@@ -60,8 +60,10 @@ privileged aspect Tpainting_Roo_SolrSearch {
             sid.addField("tpainting.createtime_dt", tpainting.getCreatetime());
             sid.addField("tpainting.categoryid_l", tpainting.getCategoryId());
             sid.addField("tpainting.sort_dt", tpainting.getSort());
+            sid.addField("tpainting.supportnum_l", tpainting.getSupportNum());
+            sid.addField("tpainting.issupport_s", tpainting.getIsSupport());
             // Add summary field to allow searching documents for objects of this type
-            sid.addField("tpainting_solrsummary_t", new StringBuilder().append(tpainting.getId()).append(" ").append(tpainting.getTitle()).append(" ").append(tpainting.getAuthor()).append(" ").append(tpainting.getCountries()).append(" ").append(tpainting.getItem()).append(" ").append(tpainting.getShortImage()).append(" ").append(tpainting.getContent()).append(" ").append(tpainting.getState()).append(" ").append(tpainting.getCreatetime()).append(" ").append(tpainting.getCategoryId()).append(" ").append(tpainting.getSort()));
+            sid.addField("tpainting_solrsummary_t", new StringBuilder().append(tpainting.getId()).append(" ").append(tpainting.getTitle()).append(" ").append(tpainting.getAuthor()).append(" ").append(tpainting.getCountries()).append(" ").append(tpainting.getItem()).append(" ").append(tpainting.getShortImage()).append(" ").append(tpainting.getContent()).append(" ").append(tpainting.getState()).append(" ").append(tpainting.getCreatetime()).append(" ").append(tpainting.getCategoryId()).append(" ").append(tpainting.getSort()).append(" ").append(tpainting.getSupportNum()).append(" ").append(tpainting.getIsSupport()));
             documents.add(sid);
         }
         try {

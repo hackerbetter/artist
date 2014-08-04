@@ -1,19 +1,28 @@
 package com.hackerbetter.artist.domain;
 
+import com.hackerbetter.artist.dto.ImgDto;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.solr.RooSolrSearchable;
 import org.springframework.roo.addon.tostring.RooToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +31,7 @@ import java.util.List;
  * 绘画作品
  */
 @RooJavaBean
+@RooJson
 @RooToString
 @RooSolrSearchable
 @RooEntity(versionField="", table="Tpainting", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
@@ -49,6 +59,7 @@ public class Tpainting  implements Serializable {
     @Column(name="content")
     private String content;
 
+    @JsonIgnore
     @NotNull
     @Column(name="state",length = 1)
     private String state="1"; //0 停用 1启用
@@ -60,9 +71,37 @@ public class Tpainting  implements Serializable {
     @Column(name="categoryId")
     private long categoryId;
 
+    @JsonIgnore
     @NotNull
     @Column(name="sort")
     private Date sort=new Date();
+
+    @Transient
+    private Long supportNum;
+    @Transient
+    private String isSupport;
+    @Transient
+    private List<ImgDto> imgs=new ArrayList<ImgDto>();
+
+
+    public String toJson(){
+        try {
+            ObjectMapper om = new ObjectMapper();
+            return om.writeValueAsString(this);
+        } catch (IOException e) {
+        }
+        return "";
+    }
+
+    public static String toJsonArray(Collection<Tpainting> collection){
+        try {
+            ObjectMapper om = new ObjectMapper();
+            return om.writeValueAsString(collection);
+        } catch (IOException e) {
+        }
+        return "";
+    }
+
 
     public static List<Tpainting> getList(SolrDocumentList results){
         List<Tpainting> list=new ArrayList<Tpainting>();
@@ -144,4 +183,41 @@ public class Tpainting  implements Serializable {
         return totalQ.getSingleResult();
     }
 
+    /**
+     * 将内容中的所有图片标签<img></img> 转换为客户端方便解析的格式
+     * 例如将<img width="" heigh="" src=""></img>
+     转为
+     {
+         "ref": "<!--IMG#0-->",
+         "pixel": "550*413",
+         "alt": "",
+         "src": "http://img2.cache.netease.com/auto/2014/5/14/20140514085858a3882.jpg"
+     }
+     */
+    public void parseImg() {
+        Document doc = Jsoup.parse(content);
+        Elements elements = doc.getElementsByTag("img");
+        for (int i = 0, length = elements.size(); i < length; i++) {
+            Element element = elements.get(i);
+            String ref = "<!--IMG#" + i + "-->";
+            String src = element.attr("src");
+            String height = element.attr("height");
+            String width = element.attr("width");
+            String alt = element.attr("alt");
+            ImgDto img = new ImgDto(ref, width, height, alt, src);
+            imgs.add(img);
+            element.parent().html(ref);
+        }
+        this.content=doc.toString();
+    }
+
+    /**
+     * 转换所有图片标签
+     * @param list
+     */
+    public static void parseAllImg(List<Tpainting> list){
+        for(Tpainting tpainting:list){
+            tpainting.parseImg();
+        }
+    }
 }
