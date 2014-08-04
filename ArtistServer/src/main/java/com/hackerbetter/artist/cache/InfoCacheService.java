@@ -3,6 +3,7 @@ package com.hackerbetter.artist.cache;
 import com.hackerbetter.artist.domain.Tcategory;
 import com.hackerbetter.artist.domain.TimageConfig;
 import com.hackerbetter.artist.domain.Tpainting;
+import com.hackerbetter.artist.dto.PaintingDto;
 import com.hackerbetter.artist.util.common.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,22 +61,22 @@ public class InfoCacheService {
 		return timageConfigs;
 	}
 
-    public List<Tpainting> getPaintingsByItem(String item,Integer pageNow,Integer pageSize){
+    public List<PaintingDto> getPaintingsByItem(String item,Integer pageNow,Integer pageSize){
         String versionKey="painting_version";
         Integer version=cacheService.get(versionKey);
         String key=StringUtil.join("_", "client", "painting", item, pageNow + "", pageSize + "", version==null?"0":version+"");
         String tpaintings=cacheService.get(key);
-        List<Tpainting> list=null;
         String where=" where o.item= ?";
         List<Object> param=new ArrayList<Object>();
         param.add(item);
         if(StringUtils.isBlank(tpaintings)){
-            list=Tpainting.findList(where, " order by o.sort desc", param, pageNow, pageSize);
-            cacheService.set(key,Tpainting.toJsonArray(list));
+            List<Tpainting> list=Tpainting.findList(where, " order by o.sort desc", param, pageNow, pageSize);
+            List<PaintingDto> paintingDtos=PaintingDto.parseAllImg(list);
+            cacheService.set(key,PaintingDto.toJsonArray(paintingDtos));
+            return paintingDtos;
         }else{
-            list= (List<Tpainting>) Tpainting.fromJsonArrayToTpaintings(tpaintings);
+            return (List<PaintingDto>) PaintingDto.fromJsonArrayToPaintingDtoes(tpaintings);
         }
-        return list;
     }
 
     public long count(String item){
@@ -93,17 +94,17 @@ public class InfoCacheService {
         return count;
     }
 
-    public Tpainting getTpainting(String paintingId){
+    public PaintingDto getTpainting(String paintingId){
         String key= StringUtil.join("_", "client", "painting", paintingId);
         String cache=cacheService.get(key);
-        Tpainting tpainting=null;
         if(StringUtils.isBlank(cache)){
-            tpainting=Tpainting.findTpainting(Long.parseLong(paintingId));
-            cacheService.set(key,tpainting.toJson());
+            Tpainting tpainting=Tpainting.findTpainting(Long.parseLong(paintingId));
+            PaintingDto paintingDto=PaintingDto.parseImg(tpainting);
+            cacheService.set(key,paintingDto.toJson());
+            return paintingDto;
         }else{
-            tpainting=Tpainting.fromJsonToTpainting(cache);
+           return PaintingDto.fromJsonToPaintingDto(cache);
         }
-        return tpainting;
     }
 
 }

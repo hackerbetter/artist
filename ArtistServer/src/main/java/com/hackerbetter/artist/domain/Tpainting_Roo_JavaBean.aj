@@ -3,7 +3,6 @@
 
 package com.hackerbetter.artist.domain;
 
-import java.lang.Long;
 import java.lang.String;
 import java.util.Date;
 
@@ -87,22 +86,6 @@ privileged aspect Tpainting_Roo_JavaBean {
     
     public void Tpainting.setSort(Date sort) {
         this.sort = sort;
-    }
-    
-    public Long Tpainting.getSupportNum() {
-        return this.supportNum;
-    }
-    
-    public void Tpainting.setSupportNum(Long supportNum) {
-        this.supportNum = supportNum;
-    }
-    
-    public String Tpainting.getIsSupport() {
-        return this.isSupport;
-    }
-    
-    public void Tpainting.setIsSupport(String isSupport) {
-        this.isSupport = isSupport;
     }
     
 }

@@ -1,6 +1,5 @@
 package com.hackerbetter.artist.domain;
 
-import com.hackerbetter.artist.dto.Page;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -8,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.solr.RooSolrSearchable;
 import org.springframework.roo.addon.tostring.RooToString;
 
@@ -24,7 +22,6 @@ import java.util.List;
  * 绘画作品
  */
 @RooJavaBean
-@RooJson
 @RooToString
 @RooSolrSearchable
 @RooEntity(versionField="", table="Tpainting", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
@@ -52,7 +49,6 @@ public class Tpainting  implements Serializable {
     @Column(name="content")
     private String content;
 
-    @JsonIgnore
     @NotNull
     @Column(name="state",length = 1)
     private String state="1"; //0 停用 1启用
@@ -64,15 +60,9 @@ public class Tpainting  implements Serializable {
     @Column(name="categoryId")
     private long categoryId;
 
-    @JsonIgnore
     @NotNull
     @Column(name="sort")
     private Date sort=new Date();
-
-    @Transient
-    private Long supportNum;
-    @Transient
-    private String isSupport;
 
     public static List<Tpainting> getList(SolrDocumentList results){
         List<Tpainting> list=new ArrayList<Tpainting>();
@@ -153,4 +143,5 @@ public class Tpainting  implements Serializable {
         }
         return totalQ.getSingleResult();
     }
+
 }
