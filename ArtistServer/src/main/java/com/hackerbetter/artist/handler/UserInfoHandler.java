@@ -1,12 +1,11 @@
 package com.hackerbetter.artist.handler;
 
+import com.hackerbetter.artist.protocol.ArtistServerInterfaceHandler;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hackerbetter.artist.protocol.ClientInfo;
-import com.hackerbetter.artist.protocol.LotserverInterfaceHandler;
 import com.hackerbetter.artist.service.UserInfoService;
-import com.hackerbetter.artist.util.common.Tools;
 
 import static com.hackerbetter.artist.util.Response.paramError;
 
@@ -16,7 +15,7 @@ import static com.hackerbetter.artist.util.Response.paramError;
  *
  */
 @Service("userInfo")
-public class UserInfoHandler implements LotserverInterfaceHandler {
+public class UserInfoHandler implements ArtistServerInterfaceHandler {
 	
 	@Autowired
     private  UserInfoService userInfoService;

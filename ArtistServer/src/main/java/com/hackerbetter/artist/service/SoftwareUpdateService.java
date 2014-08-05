@@ -1,20 +1,15 @@
 package com.hackerbetter.artist.service;
 
 import com.codahale.metrics.annotation.Timed;
-import com.hackerbetter.artist.cache.InfoCacheService;
-import com.hackerbetter.artist.domain.TimageConfig;
 import com.hackerbetter.artist.protocol.ClientInfo;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,9 +22,6 @@ public class SoftwareUpdateService {
 	
 	private Logger logger = LoggerFactory.getLogger(SoftwareUpdateService.class);
 
-	@Autowired
-	private InfoCacheService infoCacheService;
-	
 	@Produce(uri = "jms:topic:recordUserInfo", context = "camelContext")
 	private ProducerTemplate recordUserInfoTemplate;
 	

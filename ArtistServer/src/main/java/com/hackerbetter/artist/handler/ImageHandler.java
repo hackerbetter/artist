@@ -1,20 +1,17 @@
 package com.hackerbetter.artist.handler;
 
+import com.hackerbetter.artist.protocol.ArtistServerInterfaceHandler;
 import com.hackerbetter.artist.protocol.ClientInfo;
-import com.hackerbetter.artist.protocol.LotserverInterfaceHandler;
 import com.hackerbetter.artist.service.ImageService;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import static com.hackerbetter.artist.util.Response.paramError;
 
 /**
  * 图片相关请求
  * Created by hacker on 2014/5/5.
  */
 @Service("image")
-public class ImageHandler implements LotserverInterfaceHandler {
+public class ImageHandler implements ArtistServerInterfaceHandler {
     @Autowired
     private ImageService imageService;
 

@@ -1,10 +1,10 @@
 package com.hackerbetter.artist.handler;
 
+import com.hackerbetter.artist.protocol.ArtistServerInterfaceHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hackerbetter.artist.protocol.ClientInfo;
-import com.hackerbetter.artist.protocol.LotserverInterfaceHandler;
 import com.hackerbetter.artist.service.SoftwareUpdateService;
 
 /**
@@ -13,7 +13,7 @@ import com.hackerbetter.artist.service.SoftwareUpdateService;
  *
  */
 @Service("softwareupdate")
-public class SoftwareUpdateHandler implements LotserverInterfaceHandler {
+public class SoftwareUpdateHandler implements ArtistServerInterfaceHandler {
 	
 	@Autowired
 	private SoftwareUpdateService softwareUpdateService;

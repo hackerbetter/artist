@@ -10,7 +10,7 @@
 
     <appender name="artistRequest"
         class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${log.path}/client.request</File>
+        <File>${log.path}client.request</File>
         <encoder>
             <pattern>%-20(%d{MM-dd HH:mm:ss.SSS}) %X{requestId} %-5level%msg%n
             </pattern>

@@ -1,6 +1,7 @@
 package com.hackerbetter.artist.service;
 
 
+import com.codahale.metrics.annotation.Timed;
 import com.hackerbetter.artist.consts.ErrorCode;
 import static com.hackerbetter.artist.util.Response.*;
 
@@ -43,6 +44,7 @@ public class LoginService {
 	 * @param clientInfo
 	 * @return
 	 */
+    @Timed(name="用户登录")
 	public String login(ClientInfo clientInfo) {
 		try {
 			String userno = "";// 用户编号

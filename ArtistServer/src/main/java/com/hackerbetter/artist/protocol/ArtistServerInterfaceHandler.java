@@ -5,7 +5,7 @@ package com.hackerbetter.artist.protocol;
  * @author Administrator
  *
  */
-public interface LotserverInterfaceHandler {
+public interface ArtistServerInterfaceHandler {
 
 	public String execute(ClientInfo clientInfo);
 	

@@ -1,7 +1,7 @@
 package com.hackerbetter.artist.handler;
 
+import com.hackerbetter.artist.protocol.ArtistServerInterfaceHandler;
 import com.hackerbetter.artist.protocol.ClientInfo;
-import com.hackerbetter.artist.protocol.LotserverInterfaceHandler;
 import com.hackerbetter.artist.service.PaintingService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import static com.hackerbetter.artist.util.Response.paramError;
  * Created by hacker on 2014/5/6.
  */
 @Service("painting")
-public class PaintingHandler implements LotserverInterfaceHandler {
+public class PaintingHandler implements ArtistServerInterfaceHandler {
     private Logger logger = LoggerFactory.getLogger(PaintingHandler.class);
     @Autowired
     private PaintingService paintingService;

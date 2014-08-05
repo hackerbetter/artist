@@ -1,7 +1,7 @@
 package com.hackerbetter.artist.controller;
 
+import com.hackerbetter.artist.protocol.ArtistServerInterfaceHandler;
 import com.hackerbetter.artist.protocol.ClientInfo;
-import com.hackerbetter.artist.protocol.LotserverInterfaceHandler;
 import com.hackerbetter.artist.util.common.SpringUtils;
 
 /**
@@ -12,7 +12,7 @@ import com.hackerbetter.artist.util.common.SpringUtils;
 public class RequestDispatcher {
 
 	public static String dispatch(ClientInfo clientInfo) {
-		LotserverInterfaceHandler handler = SpringUtils.getBean(clientInfo.getCommand());
+		ArtistServerInterfaceHandler handler = SpringUtils.getBean(clientInfo.getCommand());
 		return handler.execute(clientInfo);
 	}
 

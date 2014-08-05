@@ -1,6 +1,7 @@
 package com.hackerbetter.artist.service;
 
 
+import com.codahale.metrics.annotation.Timed;
 import com.hackerbetter.artist.cache.InfoCacheService;
 import com.hackerbetter.artist.consts.ErrorCode;
 import com.hackerbetter.artist.consts.FavoriteType;
@@ -35,6 +36,7 @@ public class PaintingService {
 
     private Logger logger= LoggerFactory.getLogger(PaintingService.class);
 
+    @Timed(name="查询指定栏目作品")
     public String queryList(ClientInfo clientInfo) {
         String item=clientInfo.getItem();//栏目
         String pageIndex = clientInfo.getPageindex(); //当前页数
@@ -66,6 +68,7 @@ public class PaintingService {
         }
     }
 
+    @Timed(name="查询作品详情")
     public String queryDetail(ClientInfo clientInfo) {
         String paintingId=clientInfo.getPaintingId();//作品id
         String userno= clientInfo.getUserno();//用户编号
@@ -96,6 +99,7 @@ public class PaintingService {
     }
 
     @Transactional
+    @Timed(name="作品点赞")
     public String support(ClientInfo clientInfo) {
         String paintingId=clientInfo.getPaintingId();//作品id
         String userno= clientInfo.getUserno();//用户编号
@@ -114,6 +118,7 @@ public class PaintingService {
         }
     }
     @Transactional
+    @Timed(name="作品收藏")
     public String collect(ClientInfo clientInfo) {
         String paintingId=clientInfo.getPaintingId();//作品id
         String userno= clientInfo.getUserno();//用户编号
@@ -137,6 +142,7 @@ public class PaintingService {
      * @param clientInfo
      * @return
      */
+    @Timed(name="作品关键字查询")
     public String query(ClientInfo clientInfo) {
         try {
             String keyStr=clientInfo.getKeyStr();//关键字

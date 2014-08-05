@@ -1,5 +1,6 @@
 package com.hackerbetter.artist.service;
 
+import com.codahale.metrics.annotation.Timed;
 import com.hackerbetter.artist.cache.InfoCacheService;
 import com.hackerbetter.artist.domain.TimageConfig;
 import com.hackerbetter.artist.domain.Tpainting;
@@ -28,6 +29,7 @@ public class ImageService {
      * 查询首页图片
      * @return
      */
+    @Timed(name="查询图片")
     public String queryImage(String type) {
         List<TimageConfig> list=infoCacheService.getTimageConfigsByType(type);
         List<Image> result=new ArrayList<Image>();

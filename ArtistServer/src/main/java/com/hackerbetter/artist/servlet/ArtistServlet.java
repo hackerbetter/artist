@@ -48,7 +48,7 @@ public class ArtistServlet extends HttpServlet {
 	protected void service(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String requestId = UUID.randomUUID().toString();
+			String requestId = UUID.randomUUID().toString().replaceAll("-","");
 			MDC.put("requestId", requestId);
 			String returnToClient = doProcess(request, response);
 			if(null==returnToClient)
@@ -100,7 +100,7 @@ public class ArtistServlet extends HttpServlet {
 				isCompress = getIsCompress(command);
 			}
 			String ip= request.getHeader("X-Forwarded-For"); 
-			logger.info("request json: "+command+",request ip: "+ip);
+			logger.info("request json:{},request ip:{}",command,ip);
             String apiResult = processRequest(request, command, items);
 			apiResponses.add(apiResult);
 			builder.append(apiResult).append("|");
