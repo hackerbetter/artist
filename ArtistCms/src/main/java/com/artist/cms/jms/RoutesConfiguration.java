@@ -1,4 +1,4 @@
-package com.hackerbetter.artist.jms;
+package com.artist.cms.jms;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
@@ -24,7 +24,9 @@ public class RoutesConfiguration {
 			@Override
 			public void configure() throws Exception {
 				deadLetterChannel("jms:queue:dead").maximumRedeliveries(-1).redeliveryDelay(3000);
-                from("jms:queue:VirtualTopicConsumers.artistServer.recordUserInfo?concurrentConsumers=20").to("bean:recordUserInfoListener?method=process").routeId("记录用户信息通知");
+                from("jms:queue:VirtualTopicConsumers.artistCms.registerSuccess?concurrentConsumers=20").to("bean:registerSuccessListener?method=process").routeId("注册成功通知");
+                from("jms:queue:VirtualTopicConsumers.artistCms.loginSuccess?concurrentConsumers=20").to("bean:loginSuccessListener?method=process").routeId("登录成功通知");
+                from("jms:queue:VirtualTopicConsumers.artistCms.recordUserInfo?concurrentConsumers=20").to("bean:recordUserInfoListener?method=process").routeId("记录用户信息通知");
 			}
 		});
 	}

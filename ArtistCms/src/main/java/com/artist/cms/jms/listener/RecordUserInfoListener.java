@@ -1,8 +1,8 @@
-package com.hackerbetter.artist.jms.listener;
+package com.artist.cms.jms.listener;
 
 
-import com.hackerbetter.artist.consts.Platform;
-import com.hackerbetter.artist.domain.UserInf;
+import com.artist.cms.consts.Platform;
+import com.artist.cms.domain.UserInf;
 import org.apache.camel.Body;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

@@ -76,7 +76,7 @@ public class ChartUtil {
 	/**
 	 * 生成饼状图
 	 * @param request
-	 * @param data 数据集
+	 * @param dataSet 数据集
 	 * @param titleStr 标题
 	 * @return
 	 */

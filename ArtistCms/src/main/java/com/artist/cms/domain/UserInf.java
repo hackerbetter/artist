@@ -1,11 +1,15 @@
-package com.hackerbetter.artist.domain;
+package com.artist.cms.domain;
 
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.tostring.RooToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -62,7 +66,6 @@ public class UserInf {
 	
 	@Column(name = "mac")
 	private String mac;
-	
 	public static List<UserInf> getList(String where, String orderby, List<Object> params) {
 		TypedQuery<UserInf> q = entityManager().createQuery(
 				"SELECT o FROM UserInf o " + where + orderby, UserInf.class);
@@ -75,5 +78,17 @@ public class UserInf {
 		}
 		return q.getResultList();
 	}
-	
+    public static BigDecimal getTotalVolume(String where, List<Object> params) {
+        TypedQuery<Long> totalQ = entityManager().createQuery(
+                "select count(o) from UserInf o " + where, Long.class);
+        if (null != params && !params.isEmpty()) {
+            int index = 1;
+            for (Object param : params) {
+                totalQ.setParameter(index, param);
+                index = index + 1;
+            }
+        }
+        Long ret = totalQ.getSingleResult();
+        return ret == null? BigDecimal.ZERO : new BigDecimal(ret);
+    }
 }

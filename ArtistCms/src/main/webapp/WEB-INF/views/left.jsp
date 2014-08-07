@@ -100,6 +100,8 @@ Application.onChildMenuMouseOut = function(ele){
                                     <div url="<%=request.getContextPath()%>/imageconfig/list" onmouseout="Application.onChildMenuMouseOut(this)" onmouseover="Application.onChildMenuMouseOver(this)" onclick="Application.onChildMenuClick(this)" class="divtab"><b><span style="margin-left: 10px">图片管理</span></b></div>
                                     <div url="<%=request.getContextPath()%>/painting/list" onmouseout="Application.onChildMenuMouseOut(this)" onmouseover="Application.onChildMenuMouseOver(this)" onclick="Application.onChildMenuClick(this)" class="divtab"><b><span style="margin-left: 10px">作品管理</span></b></div>
                                     <div url="<%=request.getContextPath()%>/category/list" onmouseout="Application.onChildMenuMouseOut(this)" onmouseover="Application.onChildMenuMouseOver(this)" onclick="Application.onChildMenuClick(this)" class="divtab"><b><span style="margin-left: 10px">类型管理</span></b></div>
+                                    <div url="<%=request.getContextPath()%>/versionstat/list" onmouseout="Application.onChildMenuMouseOut(this)" onmouseover="Application.onChildMenuMouseOver(this)" onclick="Application.onChildMenuClick(this)" class="divtab"><b><span style="margin-left: 10px">版本统计</span></b></div>
+                                    <div url="<%=request.getContextPath()%>/coopstat/list" onmouseout="Application.onChildMenuMouseOut(this)" onmouseover="Application.onChildMenuMouseOver(this)" onclick="Application.onChildMenuClick(this)" class="divtab"><b><span style="margin-left: 10px">渠道统计</span></b></div>
                                 </div>
 							</td>
 						</tr>

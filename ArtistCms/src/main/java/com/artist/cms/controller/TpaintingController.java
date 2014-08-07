@@ -37,7 +37,7 @@ public class TpaintingController {
     public  ModelAndView list(@ModelAttribute("page") Page page, ModelAndView view) {
         try {
             List<Tcategory> tcategories=Tcategory.findAllTcategorys();
-            Tpainting.findList("", "order by o.categoryId,o.sort desc",  new ArrayList<Object>(), page);
+            Tpainting.findList("", "order by o.item,o.sort desc",  new ArrayList<Object>(), page);
             view.addObject("tcategories", tcategories);
             view.addObject("page", page);
         } catch (Exception e) {

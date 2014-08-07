@@ -36,9 +36,8 @@ public class LoginService {
 	@Autowired
 	private CoreService coreService;
 
-    @Produce(uri = "jms:topic:loginSuccess", context = "camelContext")
-    private ProducerTemplate loginSuccessTemplate;
-
+    @Autowired
+    private JmsService jmsService;
 	/**
 	 * 登录
 	 * @param clientInfo
@@ -80,7 +79,7 @@ public class LoginService {
 			} else if (StringUtils.equals(state, "1")&&StringUtils.isNotBlank(password)
 					&&StringUtils.equals(dbPassword, Tools.EncoderByMd5(password))) { //状态正常，密码正确
 				//登录成功处理
-				loginSuccessJms(userno,clientInfo);
+                jmsService.loginSuccessJms(userno,clientInfo);
 				return success("登陆成功",valueMap);
 			} else {
 				return response(new Response(ErrorCode.UserLogin_PassWordError));
@@ -90,25 +89,5 @@ public class LoginService {
 			return paramError(clientInfo.getImei());
 		}
 	}
-    /**
-     * 登录成功的Jms
-     * @param clientInfo
-     */
-    public void loginSuccessJms(String userno,ClientInfo clientInfo) {
-        Map<String, Object> body = new HashMap<String, Object>();
-        body.put("userno", userno);
-        body.put("username", clientInfo.getUsername());
-        body.put("imei", clientInfo.getImei());
-        body.put("platform", clientInfo.getPlatform());
-        body.put("type", clientInfo.getType());
-        body.put("machineId", clientInfo.getMachineId());
-        body.put("softwareversion", clientInfo.getSoftwareVersion());
-        body.put("channel", clientInfo.getCoopId());
-        body.put("mac", clientInfo.getMac());
-        body.put("token", clientInfo.getToken());
-        body.put("alias", clientInfo.getAlias());
 
-        logger.info("loginSuccessTemplate start, bodys:{}", body);
-        loginSuccessTemplate.sendBody(body);
-    }
 }

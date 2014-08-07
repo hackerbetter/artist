@@ -1,4 +1,4 @@
-package com.hackerbetter.artist.consts;
+package com.artist.cms.consts;
 
 public enum Platform {
 
