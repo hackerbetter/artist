@@ -17,7 +17,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJavaBean
 @RooToString
 @RooJson
-@RooEntity(versionField="", table="TUSERINFO", persistenceUnit="lotteryPersistenceUnit", transactionManager="lotteryTransactionManager")
+@RooEntity(versionField="", table="TUSERINFO", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
 public class TuserInfo {
 
     @Id

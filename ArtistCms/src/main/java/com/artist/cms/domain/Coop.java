@@ -1,7 +1,8 @@
 package com.artist.cms.domain;
 
 import com.artist.cms.util.Page;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.json.RooJson;
@@ -15,7 +16,7 @@ import java.util.List;
 @RooJson
 @RooEntity(versionField="", table="tbl_coop", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
 public class Coop {
-	private static final Logger logger= Logger.getLogger(Coop.class);
+	private static final Logger logger= LoggerFactory.getLogger(Coop.class);
 
 	@Column(name = "coopname")
 	private String coopname;

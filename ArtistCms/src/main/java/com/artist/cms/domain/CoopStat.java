@@ -1,7 +1,8 @@
 package com.artist.cms.domain;
 
 import com.artist.cms.util.Page;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -19,7 +20,7 @@ import java.util.List;
 @RooJson
 @RooEntity(versionField="", table="coopstat", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
 public class CoopStat {
-	private static final Logger logger= Logger.getLogger(CoopStat.class);
+	private static final Logger logger= LoggerFactory.getLogger(CoopStat.class);
 
 	@Column(name = "statdate", columnDefinition = "TIMESTAMP(6)")
 	@NotNull

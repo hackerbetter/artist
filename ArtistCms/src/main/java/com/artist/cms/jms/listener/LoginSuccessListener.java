@@ -4,7 +4,8 @@ import com.artist.cms.consts.Platform;
 import com.artist.cms.domain.TregisterInfo;
 import org.apache.camel.Body;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.Map;
 @Service
 public class LoginSuccessListener {
 
-	private Logger logger = Logger.getLogger(LoginSuccessListener.class);
+	private Logger logger = LoggerFactory.getLogger(LoginSuccessListener.class);
 	
 	public void process(@Body Map<String,String> body) {
 		try {

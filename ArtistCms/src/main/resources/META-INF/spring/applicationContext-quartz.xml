@@ -19,6 +19,7 @@
 		</property>
 		<property name="cronExpression">
 			<value>0 0 3 * * ?</value>
+            <!--<value>0 */1 * * * ?</value>-->
 		</property>
 	</bean>	
 
@@ -33,7 +34,8 @@
 			<ref bean="versionDataStatDetail" />
 		</property>
 		<property name="cronExpression">
-			<value>0 40 3 * * ?</value>
+            <value>0 40 3 * * ?</value>
+            <!--<value>0 */1 * * * ?</value>-->
 		</property>
 	</bean>
 

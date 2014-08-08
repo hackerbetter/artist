@@ -2,7 +2,8 @@ package com.artist.cms.quartz;
 
 import com.artist.cms.domain.*;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ import java.util.List;
 @Component
 public class VersionDataStatService {
 	
-	private Logger logger = Logger.getLogger(VersionDataStatService.class);
+	private Logger logger = LoggerFactory.getLogger(VersionDataStatService.class);
 	private Calendar calendar = Calendar.getInstance();
 	
 	public void process() {
@@ -44,7 +45,7 @@ public class VersionDataStatService {
 				}
 			}
 		} catch (Exception e) {
-			logger.error("版本数据统计发生异常:"+e.toString());
+			logger.error("版本数据统计发生异常:",e);
 		}
 		logger.info("版本数据统计结束");
 	}

@@ -17,7 +17,7 @@
 			<onMismatch>DENY</onMismatch>
 		</filter>
 		<encoder>
-			<pattern>%-20(%d{MM-dd HH:mm:ss.SSS}) %X{requestId} %-5level%msg%n
+			<pattern>%-20(%d{MM-dd HH:mm:ss.SSS}) %-5level%msg%n
 			</pattern>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
