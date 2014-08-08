@@ -22,10 +22,9 @@ import java.util.List;
 public class CoopStat {
 	private static final Logger logger= LoggerFactory.getLogger(CoopStat.class);
 
-	@Column(name = "statdate", columnDefinition = "TIMESTAMP(6)")
+	@Column(name = "statdate")
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(style = "S-")
+	@Temporal(TemporalType.DATE)
 	private Date statdate;
 	
 	@Column(name = "coopid")
@@ -66,8 +65,8 @@ public class CoopStat {
 			List<Object> params, Page<CoopStat> page, boolean isList) {
 		try {
 			if (isList) {
-				Query q =  entityManager().createNativeQuery(
-						"SELECT * FROM CoopStat o " + where + orderby,CoopStat.class);
+				TypedQuery<CoopStat>  q =  entityManager().createQuery(
+						"FROM CoopStat o " + where + orderby,CoopStat.class);
 				if (null != params && !params.isEmpty()) {
 					int index = 1;
 					for (Object param : params) {
@@ -78,8 +77,8 @@ public class CoopStat {
 				q.setFirstResult(page.getPageIndex() * page.getMaxResult())
 						.setMaxResults(page.getMaxResult());
 				page.setList(q.getResultList());
-				Query totalQ = entityManager().createNativeQuery(
-						"SELECT * FROM CoopStat o " + where + orderby);
+                TypedQuery<CoopStat>  totalQ = entityManager().createQuery(
+						"FROM CoopStat o " + where + orderby,CoopStat.class);
 				if (null != params && !params.isEmpty()) {
 					int index = 1;
 					for (Object param : params) {
@@ -89,8 +88,8 @@ public class CoopStat {
 				}
 				page.setTotalResult(totalQ.getResultList().size());
 			} else {
-				Query q = entityManager().createNativeQuery(
-						"SELECT * FROM CoopStat o " + where + orderby,CoopStat.class);
+                TypedQuery<CoopStat> q = entityManager().createQuery(
+						" FROM CoopStat o " + where + orderby,CoopStat.class);
 				if (null != params && !params.isEmpty()) {
 					int index = 1;
 					for (Object param : params) {
