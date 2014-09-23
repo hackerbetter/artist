@@ -30,14 +30,14 @@
         <repository>
             <id>artist</id>
             <name>Artist Repository</name>
-            <url>http://202.43.152.168/nexus/content/repositories/public/</url>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases</url>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
             <id>artist</id>
             <name>Artist Repository</name>
-            <url>http://202.43.152.168/nexus/content/repositories/public/</url>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases</url>
         </pluginRepository>
     </pluginRepositories>
     <dependencies>
@@ -492,11 +492,6 @@
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-core</artifactId>
             <version>3.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>0.11.0</version>
         </dependency>
     </dependencies>
     <build>
