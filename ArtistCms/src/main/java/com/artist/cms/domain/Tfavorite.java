@@ -20,7 +20,7 @@ import java.util.List;
 @RooJavaBean
 @RooJson
 @RooToString
-@RooEntity(versionField="", table="Tfavorite", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
+@RooEntity(versionField="", table="tfavorite", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
 public class Tfavorite  implements Serializable {
     @Column
     private Long userno;

@@ -27,7 +27,7 @@ import java.util.List;
 @RooJson
 @RooToString
 @RooSolrSearchable
-@RooEntity(versionField="", table="Tpainting", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
+@RooEntity(versionField="", table="tpainting", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
 public class Tpainting  implements Serializable {
     private static Logger logger= LoggerFactory.getLogger(Tpainting.class);
 

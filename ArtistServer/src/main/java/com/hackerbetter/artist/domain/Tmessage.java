@@ -24,7 +24,7 @@ import java.util.List;
 @RooJson
 @JsonIgnoreProperties(value = {"id","paintingId"})
 @RooToString
-@RooEntity(versionField="", table="Tmessage", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
+@RooEntity(versionField="", table="tmessage", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
 public class Tmessage implements Serializable {
     private static Logger logger= LoggerFactory.getLogger(Tmessage.class);
 
