@@ -18,7 +18,7 @@ import java.util.List;
 @RooJavaBean
 @RooJson
 @RooToString
-@RooEntity(versionField="", table="tcategory", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
+@RooEntity(versionField="", table="Tcategory", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
 public class Tcategory  implements Serializable {
     @Column(name="name",length = 60)
     private String name;//类别名称

@@ -19,7 +19,7 @@ import java.util.List;
 @RooJavaBean
 @RooJson
 @RooToString
-@RooEntity(versionField="", table="tfavorite", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
+@RooEntity(versionField="", table="Tfavorite", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
 public class Tfavorite  implements Serializable {
     private static Logger logger= LoggerFactory.getLogger(Tfavorite.class);
     @Column

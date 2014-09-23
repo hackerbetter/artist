@@ -20,7 +20,7 @@ privileged aspect TimageConfig_Roo_Entity {
     
     declare @type: TimageConfig: @Entity;
     
-    declare @type: TimageConfig: @Table(name = "timageconfig");
+    declare @type: TimageConfig: @Table(name = "Timageconfig");
     
     @PersistenceContext(unitName = "persistenceUnit")
     transient EntityManager TimageConfig.entityManager;

@@ -20,7 +20,7 @@ import java.util.List;
 @RooJavaBean
 @RooToString
 @RooJson
-@RooEntity(versionField="", table="timageconfig", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
+@RooEntity(versionField="", table="Timageconfig", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
 public class TimageConfig implements Serializable {
 
     private static Logger logger= LoggerFactory.getLogger(TimageConfig.class);
