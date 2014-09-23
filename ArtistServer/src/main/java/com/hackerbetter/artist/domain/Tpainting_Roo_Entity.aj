@@ -20,7 +20,7 @@ privileged aspect Tpainting_Roo_Entity {
     
     declare @type: Tpainting: @Entity;
     
-    declare @type: Tpainting: @Table(name = "Tpainting");
+    declare @type: Tpainting: @Table(name = "tpainting");
     
     @PersistenceContext(unitName = "persistenceUnit")
     transient EntityManager Tpainting.entityManager;

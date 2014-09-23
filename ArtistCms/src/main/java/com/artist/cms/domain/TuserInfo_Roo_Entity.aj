@@ -16,7 +16,7 @@ privileged aspect TuserInfo_Roo_Entity {
     
     declare @type: TuserInfo: @Entity;
     
-    declare @type: TuserInfo: @Table(name = "TUSERINFO");
+    declare @type: TuserInfo: @Table(name = "tuserinfo");
     
     @PersistenceContext(unitName = "persistenceUnit")
     transient EntityManager TuserInfo.entityManager;

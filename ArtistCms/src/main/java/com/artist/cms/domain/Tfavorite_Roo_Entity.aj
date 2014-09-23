@@ -20,7 +20,7 @@ privileged aspect Tfavorite_Roo_Entity {
     
     declare @type: Tfavorite: @Entity;
     
-    declare @type: Tfavorite: @Table(name = "Tfavorite");
+    declare @type: Tfavorite: @Table(name = "tfavorite");
     
     @PersistenceContext(unitName = "persistenceUnit")
     transient EntityManager Tfavorite.entityManager;

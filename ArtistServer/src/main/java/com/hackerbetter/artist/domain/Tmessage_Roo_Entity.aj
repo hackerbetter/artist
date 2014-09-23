@@ -20,7 +20,7 @@ privileged aspect Tmessage_Roo_Entity {
     
     declare @type: Tmessage: @Entity;
     
-    declare @type: Tmessage: @Table(name = "Tmessage");
+    declare @type: Tmessage: @Table(name = "tmessage");
     
     @PersistenceContext(unitName = "persistenceUnit")
     transient EntityManager Tmessage.entityManager;

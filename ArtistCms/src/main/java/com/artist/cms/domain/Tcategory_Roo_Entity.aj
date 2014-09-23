@@ -20,7 +20,7 @@ privileged aspect Tcategory_Roo_Entity {
     
     declare @type: Tcategory: @Entity;
     
-    declare @type: Tcategory: @Table(name = "Tcategory");
+    declare @type: Tcategory: @Table(name = "tcategory");
     
     @PersistenceContext(unitName = "persistenceUnit")
     transient EntityManager Tcategory.entityManager;
