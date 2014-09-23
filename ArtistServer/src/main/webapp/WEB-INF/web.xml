@@ -101,16 +101,7 @@
         <servlet-name>AdminServlet</servlet-name>
         <url-pattern>/admin/*</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>CacheServlet</servlet-name>
-        <servlet-class>com.ruyicai.lotserver.servlet.CacheServlet</servlet-class>
-    </servlet>
 
-    <servlet-mapping>
-        <servlet-name>CacheServlet</servlet-name>
-        <url-pattern>/flush_all/*</url-pattern>
-    </servlet-mapping>
-    
     <!-- page -->
     <error-page>
         <exception-type>java.lang.Exception</exception-type>

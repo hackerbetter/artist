@@ -36,7 +36,6 @@ public class JmsService {
         body.put("machine", clientInfo.getMachineId());
         body.put("softwareversion", clientInfo.getSoftwareVersion());
         body.put("channel", clientInfo.getCoopId());
-        body.put("recommender", clientInfo.getRecommender()); //推荐人的用户名
         logger.info("registerSuccessTemplate start,bodys:{}", body);
         registerSuccessTemplate.sendBody(body);
     }
@@ -57,8 +56,6 @@ public class JmsService {
         body.put("softwareversion", clientInfo.getSoftwareVersion());
         body.put("channel", clientInfo.getCoopId());
         body.put("mac", clientInfo.getMac());
-        body.put("token", clientInfo.getToken());
-        body.put("alias", clientInfo.getAlias());
 
         logger.info("loginSuccessTemplate start, bodys:{}", body);
         loginSuccessTemplate.sendBody(body);

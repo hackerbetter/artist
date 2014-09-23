@@ -15,7 +15,7 @@
 		<img src="${graphURL}" width="900" height="600" border="0" >
 	</div>
 	<div>
-		<h3 align="center">Ruyicai Client 版本统计</h3>
+		<h3 align="center">版本统计</h3>
 		<div align="right">
 			<input type="button" value="返回" onclick="javascript:history.go(-1)" align="right" />
 		</div>

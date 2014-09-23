@@ -1,4 +1,4 @@
-package com.ruyicai;
+package com.hackerbetter;
 
 import org.junit.Test;
 

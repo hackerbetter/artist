@@ -319,46 +319,6 @@ privileged aspect ClientInfo_Roo_JavaBean {
         this.randomNumber = randomNumber;
     }
     
-    public String ClientInfo.getSource() {
-        return this.source;
-    }
-    
-    public void ClientInfo.setSource(String source) {
-        this.source = source;
-    }
-    
-    public String ClientInfo.getOpenId() {
-        return this.openId;
-    }
-    
-    public void ClientInfo.setOpenId(String openId) {
-        this.openId = openId;
-    }
-    
-    public String ClientInfo.getAlias() {
-        return this.alias;
-    }
-    
-    public void ClientInfo.setAlias(String alias) {
-        this.alias = alias;
-    }
-    
-    public String ClientInfo.getRecommender() {
-        return this.recommender;
-    }
-    
-    public void ClientInfo.setRecommender(String recommender) {
-        this.recommender = recommender;
-    }
-    
-    public String ClientInfo.getAgencyNo() {
-        return this.agencyNo;
-    }
-    
-    public void ClientInfo.setAgencyNo(String agencyNo) {
-        this.agencyNo = agencyNo;
-    }
-    
     public String ClientInfo.getNewsType() {
         return this.newsType;
     }
@@ -383,14 +343,6 @@ privileged aspect ClientInfo_Roo_JavaBean {
         this.keyStr = keyStr;
     }
     
-    public String ClientInfo.getToken() {
-        return this.token;
-    }
-    
-    public void ClientInfo.setToken(String token) {
-        this.token = token;
-    }
-    
     public String ClientInfo.getInfo() {
         return this.info;
     }
@@ -407,12 +359,20 @@ privileged aspect ClientInfo_Roo_JavaBean {
         this.state = state;
     }
     
-    public String ClientInfo.getSmstype() {
-        return this.smstype;
+    public String ClientInfo.getContent() {
+        return this.content;
     }
     
-    public void ClientInfo.setSmstype(String smstype) {
-        this.smstype = smstype;
+    public void ClientInfo.setContent(String content) {
+        this.content = content;
+    }
+    
+    public String ClientInfo.getReplyTo() {
+        return this.replyTo;
+    }
+    
+    public void ClientInfo.setReplyTo(String replyTo) {
+        this.replyTo = replyTo;
     }
     
     public String ClientInfo.getNeedToSend() {

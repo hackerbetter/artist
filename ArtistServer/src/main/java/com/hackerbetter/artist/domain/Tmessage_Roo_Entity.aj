@@ -3,7 +3,7 @@
 
 package com.hackerbetter.artist.domain;
 
-import com.hackerbetter.artist.domain.Tfavorite;
+import com.hackerbetter.artist.domain.Tmessage;
 import java.lang.Long;
 import java.util.List;
 import javax.persistence.Column;
@@ -16,86 +16,86 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import org.springframework.transaction.annotation.Transactional;
 
-privileged aspect Tfavorite_Roo_Entity {
+privileged aspect Tmessage_Roo_Entity {
     
-    declare @type: Tfavorite: @Entity;
+    declare @type: Tmessage: @Entity;
     
-    declare @type: Tfavorite: @Table(name = "tfavorite");
+    declare @type: Tmessage: @Table(name = "Tmessage");
     
     @PersistenceContext(unitName = "persistenceUnit")
-    transient EntityManager Tfavorite.entityManager;
+    transient EntityManager Tmessage.entityManager;
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long Tfavorite.id;
+    private Long Tmessage.id;
     
-    public Long Tfavorite.getId() {
+    public Long Tmessage.getId() {
         return this.id;
     }
     
-    public void Tfavorite.setId(Long id) {
+    public void Tmessage.setId(Long id) {
         this.id = id;
     }
     
     @Transactional("transactionManager")
-    public void Tfavorite.persist() {
+    public void Tmessage.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional("transactionManager")
-    public void Tfavorite.remove() {
+    public void Tmessage.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            Tfavorite attached = Tfavorite.findTfavorite(this.id);
+            Tmessage attached = Tmessage.findTmessage(this.id);
             this.entityManager.remove(attached);
         }
     }
     
     @Transactional("transactionManager")
-    public void Tfavorite.flush() {
+    public void Tmessage.flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional("transactionManager")
-    public void Tfavorite.clear() {
+    public void Tmessage.clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional("transactionManager")
-    public Tfavorite Tfavorite.merge() {
+    public Tmessage Tmessage.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
-        Tfavorite merged = this.entityManager.merge(this);
+        Tmessage merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
     }
     
-    public static final EntityManager Tfavorite.entityManager() {
-        EntityManager em = new Tfavorite().entityManager;
+    public static final EntityManager Tmessage.entityManager() {
+        EntityManager em = new Tmessage().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
-    public static long Tfavorite.countTfavorites() {
-        return entityManager().createQuery("SELECT COUNT(o) FROM Tfavorite o", Long.class).getSingleResult();
+    public static long Tmessage.countTmessages() {
+        return entityManager().createQuery("SELECT COUNT(o) FROM Tmessage o", Long.class).getSingleResult();
     }
     
-    public static List<Tfavorite> Tfavorite.findAllTfavorites() {
-        return entityManager().createQuery("SELECT o FROM Tfavorite o", Tfavorite.class).getResultList();
+    public static List<Tmessage> Tmessage.findAllTmessages() {
+        return entityManager().createQuery("SELECT o FROM Tmessage o", Tmessage.class).getResultList();
     }
     
-    public static Tfavorite Tfavorite.findTfavorite(Long id) {
+    public static Tmessage Tmessage.findTmessage(Long id) {
         if (id == null) return null;
-        return entityManager().find(Tfavorite.class, id);
+        return entityManager().find(Tmessage.class, id);
     }
     
-    public static List<Tfavorite> Tfavorite.findTfavoriteEntries(int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o FROM Tfavorite o", Tfavorite.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    public static List<Tmessage> Tmessage.findTmessageEntries(int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM Tmessage o", Tmessage.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
 }

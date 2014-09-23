@@ -6,10 +6,13 @@ import com.hackerbetter.artist.cache.InfoCacheService;
 import com.hackerbetter.artist.consts.ErrorCode;
 import com.hackerbetter.artist.consts.FavoriteType;
 import com.hackerbetter.artist.domain.Tfavorite;
+import com.hackerbetter.artist.domain.Tmessage;
 import com.hackerbetter.artist.domain.Tpainting;
 import com.hackerbetter.artist.dto.Page;
 import com.hackerbetter.artist.protocol.ClientInfo;
 import com.hackerbetter.artist.util.JsonUtil;
+import com.hackerbetter.artist.util.Response;
+import com.hackerbetter.artist.util.common.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -57,13 +60,13 @@ public class PaintingService {
             long count=infoCacheService.count(item);
             long totalPage= count/pageSize+(count%pageSize>0?1:0);
             if(list!=null&&!list.isEmpty()){
-                String hasMore=totalPage>pageNow?"true":"false";
+                String hasMore=totalPage-1>pageNow?"true":"false";
                 String result= success("查询成功", list);
                 return JsonUtil.add(result,"hasMore",hasMore);
             }
             return fail(ErrorCode.NoRecord);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error("查询{}栏目作品异常",item,e);
             return fail("系统繁忙");
         }
     }
@@ -78,7 +81,7 @@ public class PaintingService {
         try {
             Tpainting painting=infoCacheService.getTpainting(paintingId);
             if(painting!=null){
-                Long supportNum= Tfavorite.querySupportNumByTypeAndPaintingId(painting.getId());
+                Long supportNum= infoCacheService.querySupportNumByTypeAndPaintingId(painting.getId());
                 painting.setSupportNum(supportNum);
                 if(StringUtils.isBlank(userno)){
                     return success("查询成功",painting);
@@ -111,6 +114,7 @@ public class PaintingService {
         }
         try {
             Tfavorite.operate(paintingId, userno,FavoriteType.STAR);
+            infoCacheService.deleteSupportNumCache(paintingId);
             return success("成功");
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -177,6 +181,66 @@ public class PaintingService {
             return success("查询成功",new Page<Tpainting>(pageNow,pageSize,totalResult,totalPage,list));
         } catch (Exception e) {
             logger.error("关键字查询作品异常",e);
+            return fail("系统繁忙");
+        }
+    }
+
+    @Timed(name="评论")
+    public String comment(ClientInfo clientInfo){
+        try {
+            String nickname=clientInfo.getNickname();//昵称
+            String message=clientInfo.getContent();//评论内容
+            String paintingId=clientInfo.getPaintingId();//作品id
+            String replyTo=clientInfo.getReplyTo();//要回复的评论Id
+            String imei=clientInfo.getImei();
+            if(StringUtil.isEmpty(nickname,message,paintingId)){
+                return paramError(imei);
+            }
+            Tmessage tmessage=new Tmessage();
+            tmessage.setContent(message);
+            tmessage.setPaintingId(Long.parseLong(paintingId));
+            if(StringUtils.isNotBlank(replyTo)){
+               Tmessage reply= Tmessage.findTmessage(Long.parseLong(replyTo));
+               tmessage.setReplyTo(reply);
+            }
+            tmessage.setAuthor(nickname);
+            tmessage.persist();
+        } catch (Exception e) {
+            logger.error("评论异常",e);
+            return Response.fail("系统繁忙");
+        }
+        return Response.success("评论成功");
+    }
+
+    @Timed(name="查询评论")
+    public String queryComment(ClientInfo clientInfo){
+        try {
+            String pageIndex = clientInfo.getPageindex(); //当前页数
+            String maxresult = clientInfo.getMaxresult(); //每页显示的条数
+            Integer pageNow=0;
+            Integer pageSize=10;
+            if (StringUtils.isNotBlank(pageIndex)) {
+                pageNow=Integer.parseInt(pageIndex);
+            }
+            if (StringUtils.isNotBlank(maxresult)) {
+                pageSize = Integer.parseInt(maxresult);
+            }
+            String paintingId=clientInfo.getPaintingId();//作品id
+            String imei=clientInfo.getImei();
+            if(StringUtils.isBlank(paintingId)){
+                return Response.paramError(imei);
+            }
+            List<Tmessage> list=Tmessage.findAllByPaintingId(Long.parseLong(paintingId),pageNow,pageSize);
+            long count=Tmessage.count(Long.parseLong(paintingId));
+            long totalPage= count/pageSize+(count%pageSize>0?1:0);
+            if(list!=null&&!list.isEmpty()){
+                String hasMore=totalPage-1>pageNow?"true":"false";
+                String result= success("查询成功", list);
+                return JsonUtil.add(result,"hasMore",hasMore);
+            }
+            return fail(ErrorCode.NoRecord);
+        } catch (NumberFormatException e) {
+            logger.error("查询评论异常",e);
             return fail("系统繁忙");
         }
     }

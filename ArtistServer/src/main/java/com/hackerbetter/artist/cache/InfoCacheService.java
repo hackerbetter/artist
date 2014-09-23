@@ -1,8 +1,6 @@
 package com.hackerbetter.artist.cache;
 
-import com.hackerbetter.artist.domain.Tcategory;
-import com.hackerbetter.artist.domain.TimageConfig;
-import com.hackerbetter.artist.domain.Tpainting;
+import com.hackerbetter.artist.domain.*;
 import com.hackerbetter.artist.util.common.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +59,7 @@ public class InfoCacheService {
 	}
 
     public List<Tpainting> getPaintingsByItem(String item,Integer pageNow,Integer pageSize){
-        String versionKey="painting_version";
+        String versionKey="painting_version_"+item;
         Integer version=cacheService.get(versionKey);
         String key=StringUtil.join("_", "client", "painting", item, pageNow + "", pageSize + "", version==null?"0":version+"");
         String tpaintings=cacheService.get(key);
@@ -71,7 +69,7 @@ public class InfoCacheService {
         param.add(item);
         if(StringUtils.isBlank(tpaintings)){
             list=Tpainting.findList(where, " order by o.sort desc", param, pageNow, pageSize);
-            Tpainting.parseAllImg(list);
+            Tpainting.deleteContent(list);
             cacheService.set(key,Tpainting.toJsonArray(list));
         }else{
             list= (List<Tpainting>) Tpainting.fromJsonArrayToTpaintings(tpaintings);
@@ -80,7 +78,7 @@ public class InfoCacheService {
     }
 
     public long count(String item){
-        String versionKey="painting_version";
+        String versionKey="painting_version_"+item;
         Integer version=cacheService.get(versionKey);
         String key=StringUtil.join("_", "client", "painting","count", item,version==null?"0":version+"");
         Long count=cacheService.get(key);
@@ -107,5 +105,23 @@ public class InfoCacheService {
         }
         return tpainting;
     }
+
+    public Long querySupportNumByTypeAndPaintingId(Long paintingId){
+        String key=StringUtil.join("_","client","supportNum",paintingId);
+        String cache=cacheService.get(key);
+        Long count=0L;
+        if(StringUtils.isBlank(cache)){
+            count= Tfavorite.querySupportNumByTypeAndPaintingId(paintingId);
+            cacheService.set(key,count+"");
+        }else{
+            count=Long.parseLong(cache.replace(" ",""));
+        }
+        return count;
+    }
+
+   public void deleteSupportNumCache(String paintingId){
+       String key=StringUtil.join("_","client","supportNum",paintingId);
+       cacheService.delete(key);
+   }
 
 }

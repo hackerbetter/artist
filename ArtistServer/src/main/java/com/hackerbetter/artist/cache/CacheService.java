@@ -12,6 +12,10 @@ public interface CacheService {
 
 	public abstract void delete(String key);
 
-	public abstract void flushAll();
+    public abstract long incr(String key, long delta);
+
+    public abstract long decr(String key, long delta);
+
+    public abstract void flushAll();
 
 }

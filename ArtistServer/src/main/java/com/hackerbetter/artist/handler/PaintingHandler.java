@@ -33,6 +33,10 @@ public class PaintingHandler implements ArtistServerInterfaceHandler {
             responseString = paintingService.collect(clientInfo);
         } else if (StringUtils.equals(requestType, "query")) { //查询作品
             responseString = paintingService.query(clientInfo);
+        } else if (StringUtils.equals(requestType, "comment")) { //评论
+            responseString = paintingService.comment(clientInfo);
+        } else if (StringUtils.equals(requestType, "queryComment")) { //查看评论
+            responseString = paintingService.queryComment(clientInfo);
         } else { //参数错误
             responseString =paramError(clientInfo.getImei());
         }

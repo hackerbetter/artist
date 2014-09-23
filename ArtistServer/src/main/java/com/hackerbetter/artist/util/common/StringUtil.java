@@ -11,24 +11,30 @@ public class StringUtil {
 
 	/**
 	 * 验证参数是否为空
-	 * 
-	 * @param str
+	 * @param string
 	 * @return
 	 */
 	public static boolean isEmpty(String string) {
 		if (StringUtils.equals(StringUtils.trimToEmpty(string), "")) {
 			return true;
 		}
-		
-		/*if (StringUtils.isEmpty(string)) {
-			return true;
-		}
-		if (string.trim().equals("")) {
-			return true;
-		}*/
 		return false;
 	}
-	
+
+    /**
+     * 验证参数是否为空
+     * @param strs
+     * @return
+     */
+    public static boolean isEmpty(String ...strs) {
+        for(String str:strs){
+            if(StringUtils.isBlank(str)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 	/**
 	 * 去掉字符串结尾的字符
 	 * @param string
@@ -37,48 +43,22 @@ public class StringUtil {
 	 */
 	public static String removeEndCharacter(String string, String endCharacter) {
 		return StringUtils.stripEnd(string, endCharacter);
-		
-		/*if (!isEmpty(string)&&string.endsWith(endCharacter)) {
-			string = string.substring(0, string.length()-endCharacter.length());
-		}
-		return string;*/
 	}
 	
-	/**
-	 * 将字符串数组用符合连接
-	 * @param list
-	 * @param character
-	 * @return
-	 */
-	/*public static String joinStringArrayWithCharacter(List<String> list, String character) {
-		StringBuilder builder = new StringBuilder();
-		if (list!=null&&list.size()>0) {
-			for (String string : list) {
-				if (!isEmpty(string)) {
-					builder.append(string).append(character);
-				}
-			}
-		}
-		return removeEndCharacter(builder.toString(), character);
-	}*/
+
 	
 	/**
 	 * 去掉开始的0
-	 * @param multiple
+	 * @param string
 	 * @return
 	 */
 	public static String removeStartZero(String string) {
 		return StringUtils.removeStart(string, "0");
-		
-		/*if (string!=null && string.length()==2 && string.startsWith("0")) {
-			return string.substring(1);
-		}
-		return string;*/
 	}
 	
-	public static String join(String split, String... values) {
+	public static String join(String split, Object... values) {
 		StringBuilder builder = new StringBuilder();
-		for(String s : values) {
+		for(Object s : values) {
 			builder.append(s).append(split);
 		}
 		return removeEndCharacter(builder.toString().trim(), split);
@@ -96,5 +76,16 @@ public class StringUtil {
 	    }
 	    return first;
 	}
-	
+
+
+    /**
+     * css样式转json  如"width: 304px; height: 411px;font:宋体"
+     * @return
+     */
+    public static  String cssToJson(String cssStr){
+        StringBuilder sb=new StringBuilder("{");
+        sb.append(cssStr.replaceAll(";",","));
+        sb.append("}");
+        return sb.toString();
+    }
 }

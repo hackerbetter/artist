@@ -1,6 +1,8 @@
 package com.hackerbetter.artist.domain;
 
 import com.hackerbetter.artist.dto.ImgDto;
+import com.hackerbetter.artist.util.JsonUtil;
+import com.hackerbetter.artist.util.common.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -22,10 +24,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Map;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+
 
 /**
  * Created by hacker on 2014/4/29.
@@ -35,7 +39,7 @@ import java.util.List;
 @RooJson
 @RooToString
 @RooSolrSearchable
-@RooEntity(versionField="", table="Tpainting", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
+@RooEntity(versionField="", table="tpainting", persistenceUnit="persistenceUnit", transactionManager="transactionManager")
 public class Tpainting  implements Serializable {
     private static Logger logger= LoggerFactory.getLogger(Tpainting.class);
 
@@ -102,7 +106,6 @@ public class Tpainting  implements Serializable {
         }
         return "";
     }
-
 
     public static List<Tpainting> getList(SolrDocumentList results){
         List<Tpainting> list=new ArrayList<Tpainting>();
@@ -205,9 +208,9 @@ public class Tpainting  implements Serializable {
             String realWidth=element.attr("width");
             String realheight=element.attr("height");
             String style=element.attr("style");
-            String []css=style.split(";");
-            String width=StringUtils.substringAfter(css[0],":");
-            String height=StringUtils.substringAfter(css[1],":");
+            Map styleMap= JsonUtil.transferJson2Map(StringUtil.cssToJson(style));
+            String width= (String) styleMap.get("width");
+            String height= (String) styleMap.get("height");
             width=StringUtils.isBlank(width)?realWidth:width.replace("px","");
             height=StringUtils.isBlank(height)?realheight:height.replace("px","");
             String alt = element.attr("alt");
@@ -215,7 +218,7 @@ public class Tpainting  implements Serializable {
             imgs.add(img);
             element.parent().html(ref);
         }
-        this.content=doc.toString();
+        this.content=doc.toString().replaceAll("\\n", "");
     }
 
     /**
@@ -225,6 +228,17 @@ public class Tpainting  implements Serializable {
     public static void parseAllImg(List<Tpainting> list){
         for(Tpainting tpainting:list){
             tpainting.parseImg();
+        }
+    }
+
+    public static void deleteContent(List<Tpainting> list){
+        if(list==null){
+            return;
+        }
+        for(int i=0,size=list.size();i<size;i++){
+            Tpainting tpainting=list.get(i);
+            tpainting.setContent("");
+            list.set(i,tpainting);
         }
     }
 }

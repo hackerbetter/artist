@@ -234,7 +234,7 @@ public class TpaintingController {
 
 
     private void updateCache(Tpainting tpainting){
-        String versionKey="painting_version";
+        String versionKey="painting_version_"+tpainting.getItem();
         Integer version=cacheService.get(versionKey);
         if(version==null){
             version=0;

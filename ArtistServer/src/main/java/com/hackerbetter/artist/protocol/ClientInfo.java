@@ -1,6 +1,5 @@
 package com.hackerbetter.artist.protocol;
 
-import org.apache.commons.fileupload.FileItem;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.json.RooJson;
 
@@ -61,13 +60,6 @@ public class ClientInfo {
 	//登录
 	private String isAutoLogin = ""; // 是否自动登录
 	private String randomNumber = ""; // 自动登录随机数
-	private String source = ""; //来源(联合登录)
-	private String openId = ""; //第三方用户标识(联合登录)
-	private String alias = ""; //客户端别名(用于安卓推送)
-	
-	//注册
-	private String recommender = ""; //推荐人的用户名
-	private String agencyNo = ""; //默认的代理编号
 
 	// 新闻资讯
 	private String newsType = ""; // 资讯查询的类型
@@ -75,12 +67,12 @@ public class ClientInfo {
 	private String keyStr = ""; //关键字
 	
 	//消息设置
-	public String token = ""; //iPhone手机标识
 	public String info = ""; //信息
 	public String state = ""; //状态
+    public String content="";//评论内容
+    public String replyTo="";//要回复的评论id
 
 	//短信通知
-	private String smstype=""; //短信类型， 1为开奖 2为中奖
 	private String needToSend="" ; //开关状态，0:关闭发送,1:打开发送
 	
 	//帮助中心

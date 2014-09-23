@@ -101,23 +101,6 @@ public class RequestParamUtil {
 			clientInfo.setSessionid(requestObject.getString(Constants.sessionId));
 		}
 
-
-
-
-		if (requestObject.has(Constants.username)) { //DNA 手机号码
-			clientInfo.setUsername(requestObject.getString(Constants.username));
-		}
-		if (requestObject.has(Constants.certId)) { //DNA 身份证号
-			clientInfo.setCertid(requestObject.getString(Constants.certId));
-		}
-
-
-
-		if (requestObject.has(Constants.mobileId)) { //手机号码
-			clientInfo.setMobileId(requestObject.getString(Constants.mobileId));
-		}
-
-
 		if (requestObject.has(Constants.keyStr)) { //键
 			clientInfo.setKeyStr(requestObject.getString(Constants.keyStr));
 		}
@@ -138,7 +121,15 @@ public class RequestParamUtil {
 		if (requestObject.has(Constants.email)) { //邮箱
 			clientInfo.setEmail(requestObject.getString(Constants.email));
 		}
-		
+        if (requestObject.has(Constants.username)) { //用户名
+            clientInfo.setUsername(requestObject.getString(Constants.username));
+        }
+        if (requestObject.has(Constants.certId)) { //身份证号
+            clientInfo.setCertid(requestObject.getString(Constants.certId));
+        }
+        if (requestObject.has(Constants.mobileId)) { //手机号码
+            clientInfo.setMobileId(requestObject.getString(Constants.mobileId));
+        }
 		//用户中心
 		if (requestObject.has(Constants.bindPhoneNum)) { //绑定的手机号码
 			clientInfo.setBindPhoneNum(requestObject.getString(Constants.bindPhoneNum));
@@ -163,46 +154,25 @@ public class RequestParamUtil {
 		if (requestObject.has(Constants.randomNumber)) { //自动登录的随机数
 			clientInfo.setRandomNumber(requestObject.getString(Constants.randomNumber));
 		}
-		if (requestObject.has(Constants.source)) { //来源(联合登录)
-			clientInfo.setSource(requestObject.getString(Constants.source));
-		}
-		if (requestObject.has(Constants.openId)) { //第三方用户标识(联合登录)
-			clientInfo.setOpenId(requestObject.getString(Constants.openId));
-		}
-		if (requestObject.has(Constants.alias)) { //客户端别名(用于安卓推送)
-			clientInfo.setAlias(requestObject.getString(Constants.alias));
-		}
-		
-		//注册
-		if (requestObject.has(Constants.recommender)) { //推荐人的用户名
-			clientInfo.setRecommender(requestObject.getString(Constants.recommender));
-		}
-		if (requestObject.has(Constants.agencyNo)) { //默认的代理编号
-			clientInfo.setAgencyNo(requestObject.getString(Constants.agencyNo));
-		}
-		
+
+
 		//消息设置
-		if (requestObject.has(Constants.token)) { //iPhone手机标识
-			clientInfo.setToken(requestObject.getString(Constants.token));
-		}
 		if (requestObject.has(Constants.info)) { //信息
 			clientInfo.setInfo(requestObject.getString(Constants.info));
 		}
-
-		//短信通知
-		if(requestObject.has(Constants.smstype)){//短信类型， 1为开奖 2为中奖
-			clientInfo.setSmstype(requestObject.getString(Constants.smstype));
-		}
-		if(requestObject.has(Constants.needToSend)){//开关状态，0:关闭发送,1:打开发送
-			clientInfo.setNeedToSend(requestObject.getString(Constants.needToSend));
-		}
-
 
 		//帮助中心
 		if (requestObject.has(Constants.code)) { //key值
 			clientInfo.setCode(requestObject.getString(Constants.code));
 		}
 
+        //评论
+        if(requestObject.has(Constants.content)){
+            clientInfo.setContent(requestObject.getString(Constants.content));
+        }
+        if(requestObject.has(Constants.replyTo)){
+            clientInfo.setReplyTo(requestObject.getString(Constants.replyTo));
+        }
 	}
 	
 }

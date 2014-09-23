@@ -98,4 +98,32 @@ public class MemCachedCacheService implements CacheService {
 			logger.error("memcache flushAll操作异常",e);
 		}
 	}
+
+    public long incr(String key,long delta) {
+        long temp = 0l;
+        try {
+            temp = memcachedClient.incr(key, delta);
+        } catch (TimeoutException e) {
+            logger.error("memcache incr操作异常",e);
+        } catch (InterruptedException e) {
+            logger.error("memcache incr操作异常",e);
+        } catch (MemcachedException e) {
+            logger.error("memcache incr操作异常",e);
+        }
+        return temp;
+    }
+
+    public long decr(String key,long delta) {
+        long temp = 0l;
+        try {
+            temp = memcachedClient.decr(key, delta);
+        } catch (TimeoutException e) {
+            logger.error("memcache decr操作异常",e);
+        } catch (InterruptedException e) {
+            logger.error("memcache decr操作异常",e);
+        } catch (MemcachedException e) {
+            logger.error("memcache decr操作异常",e);
+        }
+        return temp;
+    }
 }
