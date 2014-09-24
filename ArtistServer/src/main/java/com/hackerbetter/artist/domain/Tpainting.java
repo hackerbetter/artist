@@ -200,7 +200,6 @@ public class Tpainting  implements Serializable {
      */
     public void parseImg() {
         Document doc = Jsoup.parse(content);
-        doc.getAllElements().removeAttr("style");//去除所有style属性
         Elements elements = doc.getElementsByTag("img");
         for (int i = 0, length = elements.size(); i < length; i++) {
             Element element = elements.get(i);
@@ -219,7 +218,9 @@ public class Tpainting  implements Serializable {
             imgs.add(img);
             element.parent().html(ref);
         }
-        this.content=doc.toString().replaceAll("\\n", "");
+        doc.getAllElements().removeAttr("style");//去除所有style属性
+        doc.getElementsByTag("span").unwrap();//去除span标签
+        this.content=doc.toString().replaceAll("\\n", "").replaceAll("&nbsp;","");
     }
 
     /**
@@ -242,6 +243,5 @@ public class Tpainting  implements Serializable {
             list.set(i,tpainting);
         }
     }
-
 
 }

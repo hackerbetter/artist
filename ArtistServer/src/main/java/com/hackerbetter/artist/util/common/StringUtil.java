@@ -9,6 +9,20 @@ import org.apache.commons.lang.StringUtils;
  */
 public class StringUtil {
 
+    /**
+     * 目标字符串等于任意一个参数串返回true 否则返回false
+     * @param src
+     * @param target
+     * @return
+     */
+    public static boolean equalsAny(String src,String ... target){
+        for(String s:target){
+            if(StringUtils.equals(src,s)){
+                return true;
+            }
+        }
+        return false;
+    }
 	/**
 	 * 验证参数是否为空
 	 * @param string
