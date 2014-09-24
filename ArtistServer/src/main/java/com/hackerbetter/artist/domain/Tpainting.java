@@ -200,7 +200,7 @@ public class Tpainting  implements Serializable {
      */
     public void parseImg() {
         Document doc = Jsoup.parse(content);
-        doc.removeAttr("style");
+        doc.getAllElements().removeAttr("style");//去除所有style属性
         Elements elements = doc.getElementsByTag("img");
         for (int i = 0, length = elements.size(); i < length; i++) {
             Element element = elements.get(i);
