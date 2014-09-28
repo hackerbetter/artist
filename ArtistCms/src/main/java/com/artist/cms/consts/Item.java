@@ -5,10 +5,10 @@ package com.artist.cms.consts;
  */
 public enum Item {
 
-    Information("Information"),
-    Artists("Artists"),
-    Appreciation("Appreciation"),
-    ArtGallery("ArtGallery");
+    Information("information"),
+    Artists("artists"),
+    Appreciation("appreciation"),
+    ArtGallery("artGallery");
 
     private String memo;
 
