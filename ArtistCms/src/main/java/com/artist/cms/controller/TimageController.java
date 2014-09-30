@@ -103,7 +103,7 @@ public class TimageController {
                timageConfig.setUrl(StringUtil.getImageSrc(url));
             }
             timageConfig.setTpaintingId(tpaintingId);
-            timageConfig.setInfo(info);
+            timageConfig.setInfo(StringUtils.trim(info));
             timageConfig.merge();
             //清楚缓存
             cleanCache(timageConfig.getType());

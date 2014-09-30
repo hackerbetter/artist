@@ -55,9 +55,7 @@
                                     <tr class="thOver" id="info">
                                         <td width="6%" class="thOver"><strong>介绍:</strong></td>
                                         <td width="94%">
-                                            <textarea name="info" style="width: 400px;height: 150px">
-                                                ${imageconfig.info}
-                                            </textarea>
+                                            <textarea name="info" style="width: 400px;height: 150px">${imageconfig.info}</textarea>
                                         </td>
                                     </tr>
                                 </c:if>

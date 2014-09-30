@@ -80,9 +80,7 @@ function selectAct(){
                                 <tr class="thOver" id="info">
                                     <td width="6%" class="thOver"><strong>介绍:</strong></td>
                                     <td width="94%">
-                                        <textarea  name="info" style="width: 400px;height: 150px">
-
-                                        </textarea>
+                                        <textarea  name="info" style="width: 400px;height: 150px"></textarea>
                                     </td>
                                 </tr>
 								<tr>
