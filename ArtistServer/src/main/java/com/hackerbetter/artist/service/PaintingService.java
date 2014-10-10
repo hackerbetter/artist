@@ -37,6 +37,9 @@ public class PaintingService {
     @Autowired
     private InfoCacheService infoCacheService;
 
+    @Autowired
+    private CoreService coreService;
+
     private Logger logger= LoggerFactory.getLogger(PaintingService.class);
 
     @Timed(name="查询指定栏目作品")
@@ -113,6 +116,10 @@ public class PaintingService {
             return fail(ErrorCode.UserMod_UserNoEmpty);
         }
         try {
+            String userValid=coreService.validateUserByUserno(userno);
+            if(StringUtils.isNotBlank(userValid)){
+                return userValid;
+            }
             Tfavorite.operate(paintingId, userno,FavoriteType.STAR);
             infoCacheService.deleteSupportNumCache(paintingId);
             return success("成功");
@@ -133,6 +140,10 @@ public class PaintingService {
             return fail(ErrorCode.UserMod_UserNoEmpty);
         }
         try {
+            String userValid=coreService.validateUserByUserno(userno);
+            if(StringUtils.isNotBlank(userValid)){
+                return userValid;
+            }
             Tfavorite.operate(paintingId, userno,FavoriteType.COLLECT);
             return success("成功");
         } catch (Exception e) {

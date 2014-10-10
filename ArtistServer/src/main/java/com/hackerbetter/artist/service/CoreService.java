@@ -1,5 +1,9 @@
 package com.hackerbetter.artist.service;
 
+import com.hackerbetter.artist.consts.ErrorCode;
+import com.hackerbetter.artist.protocol.ClientInfo;
+import com.hackerbetter.artist.util.JsonUtil;
+import com.hackerbetter.artist.util.Response;
 import com.hackerbetter.artist.util.common.HttpUtil;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
@@ -10,6 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Map;
+
+import static com.hackerbetter.artist.util.Response.fail;
+import static com.hackerbetter.artist.util.Response.paramError;
 
 /**
  * Created by hacker on 2014/4/30.
@@ -148,5 +156,39 @@ public class CoreService {
             }
         }
         return "";
+    }
+
+    /**
+     * 验证查询用户信息结果
+     * 错误则返回错误信息，正确则返回null
+     * @param jsonStr
+     * @return
+     */
+    public String validateUserInfo(String jsonStr){
+        if (StringUtils.isBlank(jsonStr)) { //返回结果为空
+            return paramError("");
+        }
+        Map<String,Object> resultMap= JsonUtil.transferJson2Map(jsonStr);
+        if (resultMap==null) {
+            return fail(ErrorCode.ERROR);
+        }
+        String errorCode = (String) resultMap.get("errorCode");
+        if (StringUtils.equals(errorCode, "0000")) {
+            Map<String,Object> valueMap= (Map<String, Object>) resultMap.get("value");
+            String state = valueMap.get("state").toString();
+            if (StringUtils.equals(state, "0")) { //关闭用户
+                return new Response(ErrorCode.UserReg_UserExit).toJson();
+            } else if (StringUtils.equals(state, "2")) { //用户暂停
+                return new Response(ErrorCode.UserReg_UserPause).toJson();
+            }
+            return null;
+        } else {
+            return new Response(ErrorCode.get(errorCode)).toJson();
+        }
+    }
+
+    public String validateUserByUserno(String userno) throws UnsupportedEncodingException {
+        String userinfo=queryUsersByUserno(userno);
+        return validateUserInfo(userinfo);
     }
 }
