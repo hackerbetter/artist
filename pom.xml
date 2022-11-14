@@ -17,7 +17,7 @@
     <properties>
         <finalName>artist</finalName>
         <roo.version>1.1.5.RELEASE</roo.version>
-        <spring.version>3.1.0.RELEASE</spring.version>
+        <spring.version>3.2.18.RELEASE</spring.version>
         <aspectj.version>1.6.12</aspectj.version>
         <slf4j.version>1.6.4</slf4j.version>
         <camel.version>2.8.1</camel.version>
